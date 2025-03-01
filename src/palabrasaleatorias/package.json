@@ -1,0 +1,27 @@
+{
+  "name": "random-spanish-words",
+  "version": "2.0.0",
+  "description": "Generate one or more common Spanish words",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/marcomedina/random-spanish-words.git"
+  },
+  "keywords": [
+    "random",
+    "spanish",
+    "words"
+  ],
+  "author": "Marco Medina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marcomedina/random-spanish-words/issues"
+  },
+  "homepage": "https://github.com/marcomedina/random-spanish-words#readme",
+  "dependencies": {
+    "mocha": "^3.5.0"
+  }
+}
