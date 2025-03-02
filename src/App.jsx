@@ -104,7 +104,8 @@ function Caracter({caracter, correcto}){
   return(
     //Auí muestro el caracter y si es correcto pues se pone en blanco y si no en rojo con fondo rojo
     // si tiene un espacio en blanco y no es correcto se pone un guón bajo para que se vea el error
-    <span className={`text-5xl ${correcto ? 'text-white ' : 'text-red-600 bg-red-400'}`}>{caracter == ' ' && !correcto ? '-' : caracter}</span>
+    //utilizo un span con un nbsp para que se vea el espacio en blanco
+    <span className={`text-5xl ${correcto ? 'text-white ' : 'text-red-600'}`}>{caracter == ' ' && !correcto ? <span className=' bg-red-600'>&nbsp;</span> : caracter}</span>
   )
 }
 
