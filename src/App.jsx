@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { generate } from './randomwords2/index';
-
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      palabras: generate(25).join(' '),
+      palabras: generate(40).join(' '),
       entradaUsuario: ''
     }
   }
 
   reiniciar(){
-    let words = generate(25).join(' ');
+    let words = generate(40).join(' ');
     this.setState({palabras: words, entradaUsuario: ''});
   }
 
@@ -23,17 +22,15 @@ class App extends Component {
     return (
       <div className='bg-black items-center h-screen w-screen flex justify-center'>
         <div className="w-9/12 h-8/12 relative">
-          <h1 className="text-white font-bold text-5xl text-center mb-10">Typing Game ⌨️🎮 </h1><br />
+          <h1 className="text-white font-bold text-5xl text-center">Typing Game ⌨️🎮 </h1><br />
           <Contador tiempoRestante={30}/>
           <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
-          <div className='relative mt-3  leading-relaxed break-all mb-10'>
+          <div className='relative leading-relaxed break-all'>
             <GenerarPalabras  className='absolute inset-0' words={this.state.palabras}/>
-            <InputUsuario 
-              className='absolute inset-0' 
-              entradaUsuario={this.state.entradaUsuario} 
-              handleInputChange={this.handleInputChange}
-              palabras={this.state.palabras}
+            <InputUsuario className='absolute inset-0' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
+            palabras={this.state.palabras}
             />
+            <Cursor/>
           </div>
           <Resultados aciertos={100} errores={10} escritos={25}/>
         </div>
@@ -45,19 +42,14 @@ class App extends Component {
 // Componente que genera las palabras
 function GenerarPalabras(props){
   return(
-    <div>
-      <p className="text-gray-700 text-5xl">{props.words}</p>
-    </div>
+      <span className="text-gray-700 text-4xl">{props.words}</span>
   )
 }
-
-// Tiempo para jugar
 function Contador({tiempoRestante}){
   return(
-    <h2 className="text-purple-800 text-5xl text-center">Tiempo: {tiempoRestante}</h2>
-  )
+    <h2 className="text-purple-800 text-4xl text-center">Tiempo: {tiempoRestante}</h2>
+  )  
 }
-
 function ReinicioBoton(props){
   return(
     <button onClick={props.reiniciar}>
@@ -93,7 +85,8 @@ function InputUsuario({entradaUsuario, handleInputChange, palabras}){
         
         return (
           // le pasa a Caracter el caracter y si es correcto o no
-          <Caracter caracter={palabrasCaracteres[clave]} correcto={correcto}/> 
+          <Caracter caracter={palabrasCaracteres[clave]} correcto={correcto}/>
+          
         )
       })}
     </div>
@@ -105,8 +98,15 @@ function Caracter({caracter, correcto}){
     //Auí muestro el caracter y si es correcto pues se pone en blanco y si no en rojo con fondo rojo
     // si tiene un espacio en blanco y no es correcto se pone un guón bajo para que se vea el error
     //utilizo un span con un nbsp para que se vea el espacio en blanco
-    <span className={`text-5xl ${correcto ? 'text-white ' : 'text-red-600'}`}>
-      {caracter == ' ' && !correcto ? <span className=' bg-red-600'>&nbsp;</span> : caracter}</span>
+    <span className={`text-4xl ${correcto ? 'text-white ' : 'text-red-600'}`}>
+      {caracter == ' ' && !correcto ? <span className=' bg-red-400'>&nbsp;</span> : caracter}</span>
+      
+  )
+}
+function Cursor(){
+  return(
+    <span className='inline-block animate-ping 
+     bg-purple-600 w-0.5 h-7'></span>
   )
 }
 
