@@ -1,35 +1,47 @@
-import React from 'react'
-import { generate } from './randomwords2/index'
-import { Component } from 'react';
+import React, { Component } from 'react';
+import { generate } from './randomwords2/index';
+
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      //Genera 25 palabras en un array y las une en un string con espacio por medio
       palabras: generate(25).join(' '),
+      entradaUsuario: ''
     }
   }
+
   reiniciar(){
     let words = generate(25).join(' ');
-    this.setState({palabras: words});
+    this.setState({palabras: words, entradaUsuario: ''});
   }
+
+  handleInputChange = (event) => {
+    this.setState({ entradaUsuario: event.target.value });
+  }
+
   render(){
-  return (
-    <div className='bg-black items-center h-screen w-screen flex justify-center'>
-      <div className="w-8/12 h-8/12 relative">
-      <h1 className="text-white font-bold text-5xl text-center mb-10">Typing Game ⌨️🎮 </h1><br />
-        <Contador tiempoRestante={30}/>
-        <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
-        <div className='relative mt-3 leading-relaxed break-all mb-10'>
-          <GenerarPalabras words={this.state.palabras}/>
-          <InputUsuario className='absolute inset' userInput={this.state.palabras}/>
+    return (
+      <div className='bg-black items-center h-screen w-screen flex justify-center'>
+        <div className="w-9/12 h-8/12 relative">
+          <h1 className="text-white font-bold text-5xl text-center mb-10">Typing Game ⌨️🎮 </h1><br />
+          <Contador tiempoRestante={30}/>
+          <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
+          <div className='relative mt-3  leading-relaxed break-all mb-10'>
+            <GenerarPalabras  className='absolute inset-0' words={this.state.palabras}/>
+            <InputUsuario 
+              className='absolute inset-0' 
+              entradaUsuario={this.state.entradaUsuario} 
+              handleInputChange={this.handleInputChange}
+              palabras={this.state.palabras}
+            />
+          </div>
+          <Resultados aciertos={100} errores={10} escritos={25}/>
         </div>
-        <Resultados aciertos={100} errores={10} escritos={25}/>
       </div>
-    </div>
-  )
+    )
   }
 }
+
 // Componente que genera las palabras
 function GenerarPalabras(props){
   return(
@@ -38,12 +50,14 @@ function GenerarPalabras(props){
     </div>
   )
 }
-//Tiempo para jugar
+
+// Tiempo para jugar
 function Contador({tiempoRestante}){
   return(
     <h2 className="text-purple-800 text-5xl text-center">Tiempo: {tiempoRestante}</h2>
   )
 }
+
 function ReinicioBoton(props){
   return(
     <button onClick={props.reiniciar}>
@@ -53,32 +67,45 @@ function ReinicioBoton(props){
     </button>
   )
 }
+
 function Resultados(props){
   return(
     <ul className='text-center text-3xl text-gray-600'>
        <h2 className="text-purple-800 text-5xl text-center">Resultados:</h2>
-       <li>Aciertos:{props.aciertos}</li>
-       <li>Errores:{props.errores}</li>
-       <li>Escritos:{props.escritos}</li>
+       <li>Aciertos: {props.aciertos}</li>
+       <li>Errores: {props.errores}</li>
+       <li>Escritos: {props.escritos}</li>
     </ul>
   )
 }
-// PARA LA ENTRADA DEL USUARIO
-function InputUsuario({userInput}){
-  //convierto la cadena de texto en un array de caracteres
-  const entradaCaracteres = userInput.split("");
-  //La reccoro y muestro cada caracter
+
+// Para entrada de usuario
+function InputUsuario({entradaUsuario, handleInputChange, palabras}){
+  const entradaCaracteres = entradaUsuario.split('');
+  const palabrasCaracteres = palabras.split('');
+
   return(
     <div className='absolute inset-0'>
-      {entradaCaracteres.map((caracter, clave)=>(
-        <Caracter clave={caracter+'_'+clave} caracter={caracter}/> 
-        ))}
+      <input type="text" value={entradaUsuario} onChange={handleInputChange} className="opacity-0 absolute inset-0" autoFocus/>
+      {entradaCaracteres.map((caracter, clave) => {
+        // me comprueba si el caracter que escribo es igual al de palabras
+        const correcto = palabrasCaracteres[clave] == caracter;
+        
+        return (
+          // le pasa a Caracter el caracter y si es correcto o no
+          <Caracter caracter={palabrasCaracteres[clave]} correcto={correcto}/> 
+        )
+      })}
     </div>
   )
 }
-function Caracter({caracter}){
+
+function Caracter({caracter, correcto}){
   return(
-    <span className="text-5xl text-white">{caracter}</span>
+    //Auí muestro el caracter y si es correcto pues se pone en blanco y si no en rojo con fondo rojo
+    // si tiene un espacio en blanco y no es correcto se pone un guón bajo para que se vea el error
+    <span className={`text-5xl ${correcto ? 'text-white ' : 'text-red-600 bg-red-400'}`}>{caracter == ' ' && !correcto ? '-' : caracter}</span>
   )
 }
+
 export default App
