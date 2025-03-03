@@ -59,20 +59,19 @@ class App extends Component {
 
   render(){
     return (
-      <div className='bg-gray-950 font-mono  h-screen w-screen'>
-        <div className='flex justify-center items-center  h-screen w-screen'>
-          <div className="w-7/12 h-8/12 relative">
+      <div className='bg-gray-950 font-mono h-screen w-screen flex justify-center items-center'>
+        
+          <div className="w-8/12 h-8/12">
             <Contador tiempoRestante={this.state.tiempo}/>
             <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
-            <div className='relative leading-relaxed break-all inset-0'>
-              <GenerarPalabras className='absolute ' words={this.state.palabras}/>
+            <div className='relative mt-3 leading-relaxed inset-0 text-4xl break-all'>
+              <GenerarPalabras words={this.state.palabras}/>
               <InputUsuario className='absolute inset-0' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
               palabras={this.state.palabras}/>
             </div>
             <Resultados calcularEstadisticas = {this.calcularEstadisticas.bind(this)} contador={this.state.contador}/>
           </div>
-        </div>
-      </div>
+    </div>
     )
   }
 }
@@ -80,7 +79,7 @@ class App extends Component {
 // Componente que genera las palabras
 function GenerarPalabras(props){
   return(
-      <span className="text-gray-700 text-4xl">{props.words}</span>
+      <span className="text-gray-700">{props.words}</span>
     )
 }
 function Contador({tiempoRestante}){
@@ -103,7 +102,7 @@ function ReinicioBoton({reiniciar}){
 function Resultados({calcularEstadisticas ,contador}){
   if(contador == false){
   return(
-    <ul className='text-3xl text-gray-600'>
+    <ul className='text-3xl text-gray-600 text-center'>
        <h2 className="text-indigo-800 text-3xl">Resultados:</h2>
        <li>Letras acertadas: {calcularEstadisticas().aciertos}</li>
        <li>Errores cometidos: {calcularEstadisticas().errores}</li>
@@ -142,7 +141,7 @@ function Caracter({caracter, correcto}){
     // si tiene un espacio en blanco y no es correcto se pone un guón bajo para que se vea el error
     //utilizo un span con un nbsp para que se vea el espacio en blanco
     
-    <span className={`text-4xl ${correcto ? 'text-white' : 'text-red-600'}`}>
+    <span className={`${correcto ? 'text-white' : 'text-red-600'}`}>
       {caracter == ' ' && !correcto ? <span className='underline'>&nbsp;</span> : caracter}</span>
   )
 }
