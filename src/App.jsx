@@ -65,8 +65,8 @@ class App extends Component {
             <Contador tiempoRestante={this.state.tiempo}/>
             <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
             <div className='relative mt-3 leading-relaxed inset-0 text-4xl break-all'>
-              <GenerarPalabras words={this.state.palabras}/>
-              <InputUsuario className='absolute inset-0' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
+              <GenerarPalabras words={this.state.palabras} className='absolute inset-0'/>
+              <InputUsuario className='absolute inset-0 ' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
               palabras={this.state.palabras}/>
             </div>
             <Resultados calcularEstadisticas = {this.calcularEstadisticas.bind(this)} contador={this.state.contador}/>
@@ -119,7 +119,7 @@ function InputUsuario({entradaUsuario, handleInputChange, palabras}){
 
   return(
     <div className='absolute inset-0'>
-      <input type="text" value={entradaUsuario} onChange={handleInputChange} className="opacity-0 absolute inset-0 w-full h-full" autoFocus/>
+      <input type="text" value={entradaUsuario} onChange={handleInputChange} className="opacity-0 absolute inset-0" autoFocus/>
       
       {entradaCaracteres.map((caracter, clave) => {
         // me comprueba si el caracter que escribo es igual al de palabras
