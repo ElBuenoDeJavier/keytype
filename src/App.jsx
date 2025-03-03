@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 //importo la función de generar palabras
 import { generate } from './randomwords2/index';
-import Header from './components/Header';
 class App extends Component {
   constructor(props){
     super(props)
@@ -37,16 +36,14 @@ class App extends Component {
   //Con un set interval resta 1 al tiempo, comprueba si el tiempo es 0
   // si es 0 borra el intervalo y establece, tiempo a 30 otra vez y contador a false
   comenzarContador(){
-    this.state.intervalo = setInterval(() => {
-      //VA RESTANDO 1 AL CONTADOR CADA SEGUNDO
-      this.setState((prevState)=>({ tiempo: prevState.tiempo - 1 }));
-      
-      if(this.state.tiempo == 0){
-        clearInterval(this.state.intervalo);
-        this.setState({ tiempo: 30, contador: false,palabras: '', entradaUsuario: '' });
+    const nuevoIntervalo = setInterval(() => {
+      this.setState((prevState) => ({ tiempo: prevState.tiempo - 1 }));
+      if (this.state.tiempo === 0) {
+        clearInterval(nuevoIntervalo);
+        this.setState({ tiempo: 30, contador: false, intervalo: null });
       }
-    
     }, 1000);
+    this.setState({ intervalo: nuevoIntervalo });    
   }
   //Calcula los aciertos, errores y escritos
   calcularEstadisticas(){
@@ -63,19 +60,18 @@ class App extends Component {
   render(){
     return (
       <div className='bg-gray-950 font-mono  h-screen w-screen'>
-      
-      <div className='flex justify-center items-center  h-screen w-screen'>
-        <div className="w-7/12 h-8/12 relative">
-          <Contador tiempoRestante={this.state.tiempo}/>
-          <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
-          <div className='relative leading-relaxed break-all inset-0'>
-            <GenerarPalabras className='absolute inset-0' words={this.state.palabras}/>
-            <InputUsuario className='absolute inset-0' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
-            palabras={this.state.palabras}/>
+        <div className='flex justify-center items-center  h-screen w-screen'>
+          <div className="w-7/12 h-8/12 relative">
+            <Contador tiempoRestante={this.state.tiempo}/>
+            <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
+            <div className='relative leading-relaxed break-all inset-0'>
+              <GenerarPalabras className='absolute ' words={this.state.palabras}/>
+              <InputUsuario className='absolute inset-0' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
+              palabras={this.state.palabras}/>
+            </div>
+            <Resultados calcularEstadisticas = {this.calcularEstadisticas.bind(this)} contador={this.state.contador}/>
           </div>
-          <Resultados calcularEstadisticas = {this.calcularEstadisticas.bind(this)}/>
         </div>
-      </div>
       </div>
     )
   }
@@ -104,15 +100,17 @@ function ReinicioBoton({reiniciar}){
   )
 }
 //Muestra los resultados de los aciertos, errores y caracteres escritos
-function Resultados({calcularEstadisticas}){
+function Resultados({calcularEstadisticas ,contador}){
+  if(contador == false){
   return(
     <ul className='text-3xl text-gray-600'>
        <h2 className="text-indigo-800 text-3xl">Resultados:</h2>
-       <li>Letras aciertadas: {calcularEstadisticas().aciertos}</li>
+       <li>Letras acertadas: {calcularEstadisticas().aciertos}</li>
        <li>Errores cometidos: {calcularEstadisticas().errores}</li>
        <li>Caracteres escritos: {calcularEstadisticas().escritos}</li>
     </ul>
   )
+  }
 }
 
 // Para entrada de usuario
@@ -122,7 +120,8 @@ function InputUsuario({entradaUsuario, handleInputChange, palabras}){
 
   return(
     <div className='absolute inset-0'>
-      <input type="text" value={entradaUsuario} onChange={handleInputChange} className="opacity-5 absolute inset-0" autoFocus/>
+      <input type="text" value={entradaUsuario} onChange={handleInputChange} className="opacity-0 absolute inset-0 w-full h-full" autoFocus/>
+      
       {entradaCaracteres.map((caracter, clave) => {
         // me comprueba si el caracter que escribo es igual al de palabras
         const correcto = palabrasCaracteres[clave] == caracter;
@@ -131,9 +130,8 @@ function InputUsuario({entradaUsuario, handleInputChange, palabras}){
           <Caracter caracter={palabrasCaracteres[clave]} correcto={correcto}/>
         )
       })}
-      <Cursor/>	
-      
-      
+      <Cursor/>
+
     </div>
   )
 }
@@ -145,13 +143,12 @@ function Caracter({caracter, correcto}){
     //utilizo un span con un nbsp para que se vea el espacio en blanco
     
     <span className={`text-4xl ${correcto ? 'text-white' : 'text-red-600'}`}>
-      {caracter == ' ' && !correcto ? <span className='bg-red-400'>&nbsp;</span> : caracter}</span>
+      {caracter == ' ' && !correcto ? <span className='underline'>&nbsp;</span> : caracter}</span>
   )
 }
 function Cursor(){
   return(
-    <span className='inline-block animate-pulse
-     bg-indigo-800 w-0.5 h-7'></span>
+    <span className='inline-block animate-pulse bg-indigo-800 w-0.5 h-7'></span>
   )
 }
 
