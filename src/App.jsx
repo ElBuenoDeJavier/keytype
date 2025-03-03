@@ -59,9 +59,8 @@ class App extends Component {
 
   render(){
     return (
-      <div className='bg-gray-950 font-mono h-screen w-screen flex justify-center items-center'>
-        
-          <div className="w-8/12 h-8/12">
+      <div className='bg-gray-950 font-mono items-center h-screen w-screen flex justify-center'>
+        <div className="w-9/12 h-8/12 relative">
             <Contador tiempoRestante={this.state.tiempo}/>
             <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
             <div className='relative mt-3 leading-relaxed inset-0 text-4xl break-all'>
@@ -118,7 +117,7 @@ function InputUsuario({entradaUsuario, handleInputChange, palabras}){
   const palabrasCaracteres = palabras.split('');
 
   return(
-    <div className='absolute inset-0'>
+    <span className='absolute inset-0'>
       <input type="text" value={entradaUsuario} onChange={handleInputChange} className="opacity-0 absolute inset-0" autoFocus/>
       
       {entradaCaracteres.map((caracter, clave) => {
@@ -131,7 +130,7 @@ function InputUsuario({entradaUsuario, handleInputChange, palabras}){
       })}
       <Cursor/>
 
-    </div>
+    </span>
   )
 }
 
@@ -141,8 +140,8 @@ function Caracter({caracter, correcto}){
     // si tiene un espacio en blanco y no es correcto se pone un guón bajo para que se vea el error
     //utilizo un span con un nbsp para que se vea el espacio en blanco
     
-    <span className={`${correcto ? 'text-white' : 'text-red-600'}`}>
-      {caracter == ' ' && !correcto ? <span className='underline'>&nbsp;</span> : caracter}</span>
+    <span className={`leading-relaxed break-all ${correcto ? 'text-white' : 'text-red-600'}`}>
+      {caracter == " " && !correcto ? <span className='underline'>&nbsp;</span> : caracter}</span>
   )
 }
 function Cursor(){
