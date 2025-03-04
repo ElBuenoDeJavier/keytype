@@ -21,7 +21,7 @@ function InputUsuario({entradaUsuario, handleInputChange, palabras}){
       </span>
     )
   }
-  
+//Función que me imprime el caracter
 function Caracter({caracter, correcto}){
     return(
       //Auí muestro el caracter y si es correcto pues se pone en blanco y si no en rojo con fondo rojo

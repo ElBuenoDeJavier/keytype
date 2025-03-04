@@ -16,6 +16,10 @@ class App extends Component {
       tiempo: 30,// guarda el tiempo del contador
       intervalo: null,//guarda el objeto del intervalo
       contador: false,//variable booleana para comprobar que está activo el contador
+      //resultados
+      aciertos: 0,
+      errores: 0,
+      escritos: 0,
     }
   }
 
