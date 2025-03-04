@@ -29,7 +29,7 @@ function Caracter({caracter, correcto}){
       //utilizo un span con un nbsp para que se vea el espacio en blanco
       
       <span className={`leading-relaxed break-all ${correcto ? 'text-white' : 'text-red-600'}`}>
-        {caracter == " " && !correcto ? <span className='underline'>&nbsp;</span> : caracter}</span>
+        {caracter == " " && !correcto ? <span className='underline'>_</span> : caracter}</span>
     )
 }
 

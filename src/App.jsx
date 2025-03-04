@@ -7,6 +7,7 @@ import InputUsuario from './components/InputUsuario';
 import ReinicioBoton from './components/ReinicioBoton';
 import Resultados from './components/Resultados';
 import { generarPalabrasAleatorias } from './palabrasAleatorias/generador'
+import OpcionesJuego from './components/OpcionesJuego';
 
 class App extends Component {
   constructor(props){
@@ -85,6 +86,7 @@ class App extends Component {
       <div className='font-mono items-center h-screen w-screen flex justify-center'>
         
         <div className="w-8/12 h-8/12 absolute">
+            <OpcionesJuego/>
             <Contador tiempoRestante={this.state.tiempo}/>
             <ReinicioBoton reiniciar={this.reiniciar.bind(this)} contador={this.state.contador}/>
             <div className='relative mt-3 leading-relaxed inset-0 text-4xl break-all'>
