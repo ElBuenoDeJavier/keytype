@@ -86,7 +86,7 @@ class App extends Component {
       <div className='font-mono items-center h-screen w-screen flex justify-center'>
         
         <div className="w-8/12 h-8/12 absolute">
-            <OpcionesJuego contador={this.state.contador}/>
+            <OpcionesJuego/>
             <Contador tiempoRestante={this.state.tiempo}/>
             <ReinicioBoton reiniciar={this.reiniciar.bind(this)} contador={this.state.contador}/>
             <div className='relative mt-3 leading-relaxed inset-0 text-4xl break-all'>
