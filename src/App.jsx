@@ -60,9 +60,9 @@ class App extends Component {
   render(){
     return (
       <div className='bg-gray-950 font-mono items-center h-screen w-screen flex justify-center'>
-        <div className="w-9/12 h-8/12 relative">
+        <div className="w-8/12 h-8/12 absolute">
             <Contador tiempoRestante={this.state.tiempo}/>
-            <ReinicioBoton reiniciar={this.reiniciar.bind(this)}/>
+            <ReinicioBoton reiniciar={this.reiniciar.bind(this)} contador={this.state.contador}/>
             <div className='relative mt-3 leading-relaxed inset-0 text-4xl break-all'>
               <GenerarPalabras words={this.state.palabras} className='absolute inset-0'/>
               <InputUsuario className='absolute inset-0 ' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
@@ -87,15 +87,16 @@ function Contador({tiempoRestante}){
     <h2 className="text-indigo-800 text-4xl text-center">{tiempoRestante} s</h2>
   )  
 }
-function ReinicioBoton({reiniciar}){
+function ReinicioBoton({reiniciar , contador}){
+  if(contador == false){
   return(
     <button onClick={reiniciar}>
       <svg className="h-8 w-8 text-indigo-800 hover:text-indigo-600" viewBox="0 0 24 24" fill="none" 
     stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  
     strokeLinejoin="round">  <polyline points="1 4 1 10 7 10" />  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" /></svg>
-    
     </button>
   )
+  }
 }
 //Muestra los resultados de los aciertos, errores y caracteres escritos
 function Resultados({calcularEstadisticas ,contador}){
