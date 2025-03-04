@@ -39,6 +39,10 @@ class App extends Component {
       this.comenzarContador();
       this.setState({ contador: true });
     }
+    if(this.state.entradaUsuario.length == this.state.palabras.length){
+      let words = generarPalabrasAleatorias(40);
+      this.setState({palabras: words, entradaUsuario: ''});
+    }
     if(this.state.tiempo != 0 && this.state.entradaUsuario.length < this.state.palabras.length){
       this.setState({ entradaUsuario: event.target.value });
     }
@@ -55,6 +59,9 @@ class App extends Component {
         //guardar estadisticas en el state
         const { aciertos, errores, escritos } = {...this.calcularEstadisticas()};
         this.setState({aciertos:aciertos,errores:errores,escritos:escritos});
+        //volver a generar texto y limpiar la entrada del usuario
+        let words = generarPalabrasAleatorias(40);
+        this.setState({palabras: words, entradaUsuario: ''});
       }
     }, 1000);
     this.setState({ intervalo: nuevoIntervalo });    
