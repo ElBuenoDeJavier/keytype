@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 //importo la función de generar palabras
-import { generate } from './randomwords2/index';
+import GenerarPalabras from './components/GenerarPalabras';
+import Contador from './components/Contador';
+import InputUsuario from './components/InputUsuario';
+import ReinicioBoton from './components/ReinicioBoton';
+import Resultados from './components/Resultados';
+import Header from './components/Header';
+import { generarPalabrasAleatorias } from './palabrasAleatorias/generador'
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      palabras: generate(40).join(' '),//genera 40 palabras con la funcion de la api
+      palabras: generarPalabrasAleatorias(40),//genera 40 palabras
       entradaUsuario: '',//tiene la entrada del usuario
       tiempo: 30,// guarda el tiempo del contador
       intervalo: null,//guarda el objeto del intervalo
@@ -16,7 +22,7 @@ class App extends Component {
   //función que reinicia las palabras generadas, la entrada del usuario y el contador
   //también limpia el intervalo
   reiniciar(){
-    let words = generate(40).join(' ');
+    let words = generarPalabrasAleatorias(40);
     this.setState({palabras: words, entradaUsuario: '', tiempo: 30});
     clearInterval(this.state.intervalo);
   }
@@ -45,7 +51,7 @@ class App extends Component {
     }, 1000);
     this.setState({ intervalo: nuevoIntervalo });    
   }
-  //Calcula los aciertos, errores y escritos
+  //Calcula los aciertos, errores y escritos en tiempo real
   calcularEstadisticas(){
     //obtengo la entrada del usuario y las palabras originales y la divido por espacios en un array caracteres
     const entradaCaracteres = this.state.entradaUsuario.split('');
@@ -59,7 +65,10 @@ class App extends Component {
 
   render(){
     return (
-      <div className='bg-gray-950 font-mono items-center h-screen w-screen flex justify-center'>
+      <div className='bg-gray-950'>
+      <Header contador={this.state.contador}/>
+      <div className='font-mono items-center h-screen w-screen flex justify-center'>
+        
         <div className="w-8/12 h-8/12 absolute">
             <Contador tiempoRestante={this.state.tiempo}/>
             <ReinicioBoton reiniciar={this.reiniciar.bind(this)} contador={this.state.contador}/>
@@ -71,84 +80,9 @@ class App extends Component {
             <Resultados calcularEstadisticas = {this.calcularEstadisticas.bind(this)} contador={this.state.contador}/>
           </div>
     </div>
+    </div>
     )
   }
-}
-
-// Componente que genera las palabras
-function GenerarPalabras(props){
-  return(
-      <span className="text-gray-700">{props.words}</span>
-    )
-}
-function Contador({tiempoRestante}){
-  return(
-    //Aqui muestro el tiempo restante
-    <h2 className="text-indigo-800 text-4xl text-center">{tiempoRestante} s</h2>
-  )  
-}
-function ReinicioBoton({reiniciar , contador}){
-  if(contador == false){
-  return(
-    <button onClick={reiniciar}>
-      <svg className="h-8 w-8 text-indigo-800 hover:text-indigo-600" viewBox="0 0 24 24" fill="none" 
-    stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  
-    strokeLinejoin="round">  <polyline points="1 4 1 10 7 10" />  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" /></svg>
-    </button>
-  )
-  }
-}
-//Muestra los resultados de los aciertos, errores y caracteres escritos
-function Resultados({calcularEstadisticas ,contador}){
-  if(contador == false){
-  return(
-    <ul className='text-3xl text-gray-600 text-center'>
-       <h2 className="text-indigo-800 text-3xl">Resultados:</h2>
-       <li>Letras acertadas: {calcularEstadisticas().aciertos}</li>
-       <li>Errores cometidos: {calcularEstadisticas().errores}</li>
-       <li>Caracteres escritos: {calcularEstadisticas().escritos}</li>
-    </ul>
-  )
-  }
-}
-
-// Para entrada de usuario
-function InputUsuario({entradaUsuario, handleInputChange, palabras}){
-  const entradaCaracteres = entradaUsuario.split('');
-  const palabrasCaracteres = palabras.split('');
-
-  return(
-    <span className='absolute inset-0'>
-      <input type="text" value={entradaUsuario} onChange={handleInputChange} className="opacity-0 absolute inset-0" autoFocus/>
-      
-      {entradaCaracteres.map((caracter, clave) => {
-        // me comprueba si el caracter que escribo es igual al de palabras
-        const correcto = palabrasCaracteres[clave] == caracter;
-        return (
-          // le pasa a Caracter el caracter y si es correcto o no
-          <Caracter caracter={palabrasCaracteres[clave]} correcto={correcto}/>
-        )
-      })}
-      <Cursor/>
-
-    </span>
-  )
-}
-
-function Caracter({caracter, correcto}){
-  return(
-    //Auí muestro el caracter y si es correcto pues se pone en blanco y si no en rojo con fondo rojo
-    // si tiene un espacio en blanco y no es correcto se pone un guón bajo para que se vea el error
-    //utilizo un span con un nbsp para que se vea el espacio en blanco
-    
-    <span className={`leading-relaxed break-all ${correcto ? 'text-white' : 'text-red-600'}`}>
-      {caracter == " " && !correcto ? <span className='underline'>&nbsp;</span> : caracter}</span>
-  )
-}
-function Cursor(){
-  return(
-    <span className='inline-block animate-pulse bg-indigo-800 w-0.5 h-7'></span>
-  )
 }
 
 export default App
