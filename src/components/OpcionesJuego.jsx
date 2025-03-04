@@ -2,7 +2,7 @@ import React from "react";
 export default function OpcionesJuego({contador}){
     if(contador == false){
     return(
-        <div class="flex rounded-md shadow-xs justify-center mb-3" role="group">
+        <div className="flex rounded-md shadow-xs justify-center mb-3" role="group">
             <div className="mr-3">
             <button type="button" className="px-4 py-2 text-2xl text-indigo-800 bg-transparent border 
             border-indigo-800 rounded-s-lg hover:bg-gray-900 focus:z-10 focus:ring-2 focus:ring-indigo-400 focus:bg-indigo-800
