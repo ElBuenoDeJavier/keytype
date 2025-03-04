@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 //importo la función de generar palabras
+import Header from './components/Header';
 import GenerarPalabras from './components/GenerarPalabras';
 import Contador from './components/Contador';
 import InputUsuario from './components/InputUsuario';
 import ReinicioBoton from './components/ReinicioBoton';
 import Resultados from './components/Resultados';
-import Header from './components/Header';
 import { generarPalabrasAleatorias } from './palabrasAleatorias/generador'
+
 class App extends Component {
   constructor(props){
     super(props)
@@ -51,6 +52,9 @@ class App extends Component {
       if (this.state.tiempo === 0) {
         clearInterval(nuevoIntervalo);
         this.setState({ tiempo: 30, contador: false, intervalo: null });
+        //guardar estadisticas en el state
+        const { aciertos, errores, escritos } = {...this.calcularEstadisticas()};
+        this.setState({aciertos:aciertos,errores:errores,escritos:escritos});
       }
     }, 1000);
     this.setState({ intervalo: nuevoIntervalo });    
@@ -81,9 +85,9 @@ class App extends Component {
               <InputUsuario className='absolute inset-0 ' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
               palabras={this.state.palabras}/>
             </div>
-            <Resultados calcularEstadisticas = {this.calcularEstadisticas.bind(this)} contador={this.state.contador}/>
+            <Resultados aciertos = {this.state.aciertos} errores={this.state.errores} escritos={this.state.escritos} contador={this.state.contador}/>
           </div>
-    </div>
+      </div>
     </div>
     )
   }
