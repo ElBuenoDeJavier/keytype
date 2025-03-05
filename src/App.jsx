@@ -6,7 +6,7 @@ import Contador from './components/Contador';
 import InputUsuario from './components/InputUsuario';
 import ReinicioBoton from './components/ReinicioBoton';
 import Resultados from './components/Resultados';
-import { generarPalabrasAleatorias } from './palabrasAleatorias/generador';
+import { generarPalabrasAleatorias } from './palabrasAleatorias/generador'
 import OpcionesJuego from './components/OpcionesJuego';
 
 class App extends Component {
@@ -49,7 +49,6 @@ class App extends Component {
     }
   }
 
-
   //Con un set interval resta 1 al tiempo, comprueba si el tiempo es 0
   // si es 0 borra el intervalo y establece, tiempo a 30 otra vez y contador a false
   comenzarContador(){
@@ -79,29 +78,18 @@ class App extends Component {
     const escritos = entradaCaracteres.length;
     return { aciertos, errores, escritos };
   }
-  //PARA ESTABLECER EL TIEMPO CON LA BOTONERA
-  establecerTiempo(event){
-    return(
-      this.setState({tiempo : event.target.value})
-    )
-  }
-  //PARA ESTABLECER EL NUMERO DE PALABRAS
-  establecerPalabras = (event)=>{
-    this.setState({palabras : generarPalabrasAleatorias(event.target.value)});
-  }
-  //LO QUE SE MUESTRA
+
   render(){
     return (
       <div className='bg-gray-950'>
       <Header contador={this.state.contador}/>
       <div className='font-mono items-center h-screen w-screen flex justify-center'>
         
-        <div className="w-7/12 h-8/12 absolute">
-            <OpcionesJuego contador={this.state.contador}
-            establecerTiempo={this.establecerTiempo.bind(this)} establecerPalabras={this.establecerPalabras}/>
+        <div className="w-8/12 h-8/12 absolute">
+            <OpcionesJuego contador={this.state.contador}/>
             <Contador tiempoRestante={this.state.tiempo}/>
             <ReinicioBoton reiniciar={this.reiniciar.bind(this)} contador={this.state.contador}/>
-            <div className='relative mt-3 leading-relaxed inset-0 text-3xl break-all'>
+            <div className='relative mt-3 leading-relaxed inset-0 text-4xl break-all'>
               <GenerarPalabras words={this.state.palabras} className='absolute inset-0'/>
               <InputUsuario className='absolute inset-0 ' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
               palabras={this.state.palabras}/>
