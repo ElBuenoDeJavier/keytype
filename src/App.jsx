@@ -85,6 +85,7 @@ class App extends Component {
       this.setState({tiempo : event.target.value})
     )
   }
+  
   //PARA ESTABLECER EL NUMERO DE PALABRAS
   establecerPalabras = (event)=>{
     this.setState({palabras : generarPalabrasAleatorias(event.target.value)});
