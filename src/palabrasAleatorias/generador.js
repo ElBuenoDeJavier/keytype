@@ -113,7 +113,7 @@ export function generarPalabrasAleatorias(num){
     //ordena aleatoriamente el array
     listaPalabras.sort((a, b) => 0.5 - Math.random());
     //corta el tamaño del array al indicado
-    let listaAleatoria = listaPalabras.slice(1,num);
+    let listaAleatoria = listaPalabras.slice(0,num);
     //devuelve un string separado por espacios de los caracteres
     return listaAleatoria.join(' ');
 }
