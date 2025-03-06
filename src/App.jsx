@@ -8,6 +8,9 @@ import ReinicioBoton from './components/ReinicioBoton';
 import Resultados from './components/Resultados';
 import { generarPalabrasAleatorias } from './palabrasAleatorias/generador';
 import OpcionesJuego from './components/OpcionesJuego';
+import MostrarJuego from './components/MostrarJuego';
+import MostrarLogin from './components/MostrarLogin';
+import Form from './components/Form';
 
 class App extends Component {
   constructor(props){
@@ -22,6 +25,8 @@ class App extends Component {
       aciertos: 0,
       errores: 0,
       escritos: 0,
+      //Para mostrar el div del login
+      mostrarlogin: false,
     }
   }
 
@@ -90,14 +95,27 @@ class App extends Component {
   establecerPalabras = (event)=>{
     this.setState({palabras : generarPalabrasAleatorias(event.target.value)});
   }
+  
+  
+  //PARA ESTABLECER EL NUMERO DE PALABRAS
+  pulsarBotonLogin (){
+    this.setState({mostrarlogin : true});
+  }
+  
+  //Mostrar el juego si pulsas el logo
+  pulsarLogo (){
+    this.setState({mostrarlogin : false});
+  }
+
+
   //LO QUE SE MUESTRA
   render(){
     return (
       <div className='bg-gray-950'>
-      <Header contador={this.state.contador}/>
+      <Header contador={this.state.contador} pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} pulsarLogo={this.pulsarLogo.bind(this)}/>
       <div className='font-mono items-center h-screen w-screen flex justify-center'>
         
-        <div className="w-7/12 h-8/12 absolute">
+        <MostrarJuego mostrarlogin={this.state.mostrarlogin}>
             <OpcionesJuego contador={this.state.contador}
             establecerTiempo={this.establecerTiempo.bind(this)} establecerPalabras={this.establecerPalabras}/>
             <Contador tiempoRestante={this.state.tiempo}/>
@@ -108,7 +126,11 @@ class App extends Component {
               palabras={this.state.palabras}/>
             </div>
             <Resultados aciertos = {this.state.aciertos} errores={this.state.errores} escritos={this.state.escritos} contador={this.state.contador}/>
-          </div>
+          </MostrarJuego>
+          
+          <MostrarLogin mostrarlogin={this.state.mostrarlogin}>
+              <Form/>
+          </MostrarLogin>
       </div>
     </div>
     )
