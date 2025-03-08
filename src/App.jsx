@@ -113,6 +113,7 @@ class App extends Component {
     return (
       <div className='bg-gray-950'>
       <Header contador={this.state.contador} pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} pulsarLogo={this.pulsarLogo.bind(this)}/>
+      
       <div className='font-mono items-center h-screen w-screen flex justify-center'>
         
         <MostrarJuego mostrarlogin={this.state.mostrarlogin}>
