@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
   try {
 
     
-    let newDocument = {
+    let nuevoUsuario = {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
     let user = await collection.findOne({email: req.body.email});
     // COMPROBAR QUE NO EXISTE UN USUARIO CON EL MISMO CORREO
     if(!user){
-        let result = await collection.insertOne(newDocument);
+        let result = await collection.insertOne(nuevoUsuario);
         res.send(result).status(204);
     }else{
         return res.status(401).send({message:"Ya existe un usuario con este correo"});
