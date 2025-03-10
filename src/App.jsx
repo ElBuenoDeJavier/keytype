@@ -119,8 +119,11 @@ class App extends Component {
     // PARA ACCEDER A LA RUTA DE MI BACKEND DONDE ESTA MI ROUTE
     const endpoint = 'http://localhost:5050/puntuacion/add';
     // OBTENGO LOS VALORES DEL ESTADO EN ESTAS CONSTANTES
-    const { dataUsuario, aciertos, errores, escritos } = this.state;
-
+    const dataUsuario = this.state.dataUsuario;
+    const aciertos = this.state.aciertos;
+    const errores = this.state.errores;
+    const escritos = this.state.escritos;
+    // CREO EL BODY CON LOS DATOS QUE VOY A ENVIAR
     const body = {aciertos, errores, escritos, dataUsuario };
 
     // Hago la peticion con la api fetch si es registro
@@ -134,6 +137,9 @@ class App extends Component {
       //Si la respuesta no es true me devuelve la excepcion con el error
       if (response.ok){
         alert('Se han guardado tus estadísticas');
+        //Para reiniciar los valores de los aciertos, errores y escritos
+        // Y que no se muestren por pantalla
+        this.setState({aciertos:0,errores:0,escritos:0});
       }else{
         // LA RESPUESTA NO ES CORRECTA, hay algun problema al crearlo
         console.error(data.message); 

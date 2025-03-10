@@ -18,11 +18,13 @@ router.post("/add", async (req, res) => {
       errores: req.body.errores,
       escritos: req.body.escritos,
     };
-    if(req.body.dataUsuario.name != ''){
+    if(req.body.dataUsuario.name != null){
+      //Insertar estadísticas en la base de datos
+        let collection = await db.collection("puntuaciones");
         let result = await collection.insertOne(guardarEstadisticas);
         res.status(200).send({ message: 'Estadísticas guardadas exitosamente', result });
     }else{
-        return res.status(401).send({message:"No se ha iniciado sesión"});
+        return res.status(401).send({message:"Inicia sesión para guardar tus estadísticas"});
     }
   } catch (err) {
     console.error(err);
