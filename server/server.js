@@ -3,11 +3,11 @@ import cors from "cors";    // middleware que permite solicitudes desde otros do
 import usuarios from "./routes/usuario.js"; // se importa el modulo usuario.js
 //Puerto en el que correra el servidor
 const PORT = process.env.PORT || 5050;
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-app.use("/usuario", usuarios);
+const app = express(); //Inicializacion de express
+//middlewares
+app.use(cors()); // habilita cors para permitir peticiones desde fuera
+app.use(express.json()); // permite el procesamiento json en las solicitudes
+app.use("/usuario", usuarios); // definicion de ruta
 
 // start the Express server
 app.listen(PORT, () => {
