@@ -27,6 +27,8 @@ class App extends Component {
       escritos: 0,
       //Para mostrar el div del login
       mostrarlogin: false,
+      //DATOS DEL USUARIO
+      dataUsuario: false,
     }
   }
 
@@ -107,30 +109,56 @@ class App extends Component {
     this.setState({mostrarlogin : false});
   }
 
+  // OBTENER DATOS DEL USUARIO EN FORMATO JSON
+  setDataUsuario(data){
+    this.setState({dataUsuario : data});
+  }
+
 
   //LO QUE SE MUESTRA
   render(){
     return (
       <div className='bg-gray-950'>
-      <Header contador={this.state.contador} pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} pulsarLogo={this.pulsarLogo.bind(this)}/>
+      <Header 
+      contador={this.state.contador} 
+      pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} 
+      pulsarLogo={this.pulsarLogo.bind(this)}
+      dataUsuario={this.state.dataUsuario}
+      />
       
       <div className='font-mono items-center h-screen w-screen flex justify-center'>
         
         <MostrarJuego mostrarlogin={this.state.mostrarlogin}>
-            <OpcionesJuego contador={this.state.contador}
-            establecerTiempo={this.establecerTiempo.bind(this)} establecerPalabras={this.establecerPalabras}/>
+            <OpcionesJuego 
+            contador={this.state.contador}
+            establecerTiempo={this.establecerTiempo.bind(this)} 
+            establecerPalabras={this.establecerPalabras}/>
             <Contador tiempoRestante={this.state.tiempo}/>
-            <ReinicioBoton reiniciar={this.reiniciar.bind(this)} contador={this.state.contador}/>
+            <ReinicioBoton 
+            reiniciar={this.reiniciar.bind(this)} 
+            contador={this.state.contador}/>
+            
             <div className='relative mt-3 leading-relaxed inset-0 text-3xl break-all'>
-              <GenerarPalabras words={this.state.palabras} className='absolute inset-0'/>
-              <InputUsuario className='absolute inset-0 ' entradaUsuario={this.state.entradaUsuario} handleInputChange={this.handleInputChange} 
+              <GenerarPalabras 
+              words={this.state.palabras} 
+              className='absolute inset-0'/>
+              
+              <InputUsuario 
+              className='absolute inset-0 ' 
+              entradaUsuario={this.state.entradaUsuario} 
+              handleInputChange={this.handleInputChange} 
               palabras={this.state.palabras}/>
             </div>
-            <Resultados aciertos = {this.state.aciertos} errores={this.state.errores} escritos={this.state.escritos} contador={this.state.contador}/>
+            
+            <Resultados 
+            aciertos = {this.state.aciertos} 
+            errores={this.state.errores} 
+            escritos={this.state.escritos} 
+            contador={this.state.contador}/>
           </MostrarJuego>
           
           <MostrarLogin mostrarlogin={this.state.mostrarlogin}>
-              <Form/>
+              <Form setDataUsuario={this.setDataUsuario.bind(this)}/>
           </MostrarLogin>
       </div>
     </div>

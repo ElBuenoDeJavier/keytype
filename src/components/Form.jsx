@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { data } from 'react-router-dom';
 
 export default class Form extends Component {
   constructor(props){
@@ -23,7 +24,6 @@ export default class Form extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  
   
   //Controlar el envio
   handleSubmit = async (e) => {
@@ -79,6 +79,8 @@ export default class Form extends Component {
         // Realiza cualquier acción adicional, como redirigir al usuario a otra página
         // AQUI DEBERIA REDIRIGIR AL USUARIO A LA PAGINA DEL USUARIO Y SUS ESTADISTICAS
         alert('USUARIO AUTENTICADO: '+data.user.name+data.user.email+data.user.password);
+        //Guardo en el estado la informacion del usuario
+        this.props.setDataUsuario(data.user);
       } else {
         console.error(data.message); 
         // Mostrar el mensaje de error
