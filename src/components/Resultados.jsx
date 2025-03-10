@@ -9,6 +9,7 @@ function Resultados(props){
          <li>Caracteres acertados✅: {props.aciertos}</li>
          <li>Errores cometidos❌: {props.errores}</li>
          <li>Caracteres escritos⌨️: {props.escritos}</li>
+         <button onClick={()=>props.guardarEstadisticas()} className="text-white text-2xl mt-5 px-5 py-2 rounded-full bg-emerald-600 hover:bg-emerald-400">Guardar estadísticas</button>
       </ul>
     )
     }

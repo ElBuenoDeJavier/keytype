@@ -114,6 +114,41 @@ class App extends Component {
     this.setState({dataUsuario : data});
   }
 
+  // PARA GUARDAR LAS ESTADÍSTICAS
+  guardarEstadisticas = async () => {
+    // PARA ACCEDER A LA RUTA DE MI BACKEND DONDE ESTA MI ROUTE
+    const endpoint = 'http://localhost:5050/puntuacion/add';
+    // OBTENGO LOS VALORES DEL ESTADO EN ESTAS CONSTANTES
+    const { dataUsuario, aciertos, errores, escritos } = this.state;
+
+    const body = {aciertos, errores, escritos, dataUsuario };
+
+    // Hago la peticion con la api fetch si es registro
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await response.json();
+      //Si la respuesta no es true me devuelve la excepcion con el error
+      if (response.ok){
+        alert('Se han guardado tus estadísticas');
+      }else{
+        // LA RESPUESTA NO ES CORRECTA, hay algun problema al crearlo
+        console.error(data.message); 
+        // Mostrar el mensaje de error
+        alert(data.message);
+      }
+    } catch (error) {
+      // Si hay algun error lo capturo
+      console.error('Error:', error);
+      alert('Error:'+ error);
+    }
+  }
+
+
+
 
   //LO QUE SE MUESTRA
   render(){
@@ -154,7 +189,9 @@ class App extends Component {
             aciertos = {this.state.aciertos} 
             errores={this.state.errores} 
             escritos={this.state.escritos} 
-            contador={this.state.contador}/>
+            contador={this.state.contador}
+            guardarEstadisticas={this.guardarEstadisticas.bind(this)}
+            />
           </MostrarJuego>
           
           <MostrarLogin mostrarlogin={this.state.mostrarlogin}>
