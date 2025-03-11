@@ -32,4 +32,12 @@ router.post("/add", async (req, res) => {
   }
 });
 
+//GET
+router.get("/", async (req, res) => {
+  let collection = await db.collection("puntuaciones");
+  //devuelve un array de objetos
+  let results = await collection.find({}).toArray();
+  res.send(results);
+});
+
 export default router;

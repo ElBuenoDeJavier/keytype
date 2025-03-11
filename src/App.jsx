@@ -11,6 +11,8 @@ import OpcionesJuego from './components/OpcionesJuego';
 import MostrarJuego from './components/MostrarJuego';
 import MostrarLogin from './components/MostrarLogin';
 import Form from './components/Form';
+import MostrarEstadisticas from './components/MostrarEstadisticas';
+import Estadisticas from './components/Estadisticas';
 
 class App extends Component {
   constructor(props){
@@ -27,6 +29,8 @@ class App extends Component {
       escritos: 0,
       //Para mostrar el div del login
       mostrarlogin: false,
+      mostrarjuego: true,
+      mostrarestadisticas: false,
       //DATOS DEL USUARIO
       dataUsuario: false,
     }
@@ -39,9 +43,10 @@ class App extends Component {
     this.setState({palabras: words, entradaUsuario: '', tiempo: 30});
     clearInterval(this.state.intervalo);
   }
-// Cada vez que se pulsa una tecla se activa la función y comprueba si el contador
-// está activo si no lo está llama a la función comenzarContador y establece el contador a true
-// establece en entradaUsuario el valor del input para que se vea por pantalla
+
+  // Cada vez que se pulsa una tecla se activa la función y comprueba si el contador
+  // está activo si no lo está llama a la función comenzarContador y establece el contador a true
+  // establece en entradaUsuario el valor del input para que se vea por pantalla
   handleInputChange = (event) => {
     if(!this.state.contador){
       this.comenzarContador();
@@ -55,7 +60,6 @@ class App extends Component {
       this.setState({ entradaUsuario: event.target.value });
     }
   }
-
 
   //Con un set interval resta 1 al tiempo, comprueba si el tiempo es 0
   // si es 0 borra el intervalo y establece, tiempo a 30 otra vez y contador a false
@@ -75,6 +79,7 @@ class App extends Component {
     }, 1000);
     this.setState({ intervalo: nuevoIntervalo });    
   }
+
   //Calcula los aciertos, errores y escritos en tiempo real
   calcularEstadisticas(){
     //obtengo la entrada del usuario y las palabras originales y la divido por espacios en un array caracteres
@@ -86,27 +91,27 @@ class App extends Component {
     const escritos = entradaCaracteres.length;
     return { aciertos, errores, escritos };
   }
+
   //PARA ESTABLECER EL TIEMPO CON LA BOTONERA
   establecerTiempo(event){
     return(
       this.setState({tiempo : event.target.value})
     )
   }
-  
+
   //PARA ESTABLECER EL NUMERO DE PALABRAS
   establecerPalabras = (event)=>{
     this.setState({palabras : generarPalabrasAleatorias(event.target.value)});
   }
-  
-  
+
   //PARA ESTABLECER EL NUMERO DE PALABRAS
   pulsarBotonLogin (){
-    this.setState({mostrarlogin : true});
+    this.setState({mostrarlogin : true, mostrarjuego: false, mostrarestadisticas: false});
   }
-  
+
   //Mostrar el juego si pulsas el logo
   pulsarLogo (){
-    this.setState({mostrarlogin : false});
+    this.setState({mostrarlogin : false, mostrarjuego: true, mostrarestadisticas: false});
   }
 
   // OBTENER DATOS DEL USUARIO EN FORMATO JSON
@@ -153,9 +158,6 @@ class App extends Component {
     }
   }
 
-
-
-
   //LO QUE SE MUESTRA
   render(){
     return (
@@ -164,12 +166,15 @@ class App extends Component {
       contador={this.state.contador} 
       pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} 
       pulsarLogo={this.pulsarLogo.bind(this)}
+      //Para poner el estado a true y mostrar las estadísticas
+      pulsarEstadisticas={()=>this.setState({mostrarestadisticas : true, mostrarlogin: false, mostrarjuego: false})}
+      salirEstadisticas={()=>this.setState({mostrarestadisticas : false, mostrarjuego: true})}
       dataUsuario={this.state.dataUsuario}
       />
       
       <div className='font-mono items-center h-screen w-screen flex justify-center'>
         
-        <MostrarJuego mostrarlogin={this.state.mostrarlogin}>
+        <MostrarJuego mostrarlogin={this.state.mostrarlogin} mostrarestadisticas={this.state.mostrarestadisticas} mostrarjuego={this.state.mostrarjuego}>
             <OpcionesJuego 
             contador={this.state.contador}
             establecerTiempo={this.establecerTiempo.bind(this)} 
@@ -200,9 +205,13 @@ class App extends Component {
             />
           </MostrarJuego>
           
-          <MostrarLogin mostrarlogin={this.state.mostrarlogin}>
+          <MostrarLogin mostrarlogin={this.state.mostrarlogin} mostrarestadisticas={this.state.mostrarestadisticas} mostrarjuego={this.state.mostrarjuego}>
               <Form setDataUsuario={this.setDataUsuario.bind(this)}/>
           </MostrarLogin>
+          
+          <MostrarEstadisticas mostrarlogin={this.state.mostrarlogin} mostrarestadisticas={this.state.mostrarestadisticas} mostrarjuego={this.state.mostrarjuego}>
+              <Estadisticas/>
+          </MostrarEstadisticas>
       </div>
     </div>
     )

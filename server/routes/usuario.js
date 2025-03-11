@@ -14,8 +14,9 @@ const router = express.Router();
 // LISTA DE USUARIOS CON GET
 router.get("/", async (req, res) => {
   let collection = await db.collection("usuarios");
+  //devuelve un array de objetos para mostrar todos los usuarios
   let results = await collection.find({}).toArray();
-  res.send(results).status(200);
+  res.send(results);
 });
 
 // REGISTRAR USUARIO.
