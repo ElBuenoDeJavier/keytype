@@ -19,10 +19,10 @@ export default class Estadisticas extends React.Component {
             const arrayUsuarios = data;
             //Para ordenar los usuarios por aciertos
             arrayUsuarios.sort((a, b) => {
-                if (((a.aciertos*0.4)+(a.errores*0.4)+(a.escritos*0.2)) > ((b.aciertos*0.4)+(b.errores*0.4)+(b.escritos*0.2))) {
+                if ((Math.round(100*(a.aciertos/a.escritos))) > (Math.round(100*(b.aciertos/b.escritos)))) {
                     return -1;
                 }
-                if (((a.aciertos*0.4)+(a.errores*0.4)+(a.escritos*0.2)) < ((b.aciertos*0.4)+(b.errores*0.4)+(b.escritos*0.2))) {
+                if ((Math.round(100*(a.aciertos/a.escritos))) < (Math.round(100*(b.aciertos/b.escritos)))) {
                     return 1;
                 }
                 return 0;
@@ -57,11 +57,11 @@ export default class Estadisticas extends React.Component {
                             
                                 <div className="stat place-items-center hover:bg-gray-900">
                                     <div className="stat-title">Puntuacion</div>
-                                    <div className="stat-value">{Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2))}</div>
+                                    <div className="stat-value">{Math.round(100*(usuario.aciertos/usuario.escritos))}</div>
                                     <div className="stat-desc">{
-                                        Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 90 ? "⭐⭐⭐⭐⭐":
-                                        Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 80 ? "⭐⭐⭐⭐":
-                                        Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 70 ? "⭐⭐⭐":
+                                        Math.round(100*(usuario.aciertos/usuario.escritos)) > 90 ? "⭐⭐⭐⭐⭐":
+                                        Math.round(100*(usuario.aciertos/usuario.escritos)) > 80 ? "⭐⭐⭐⭐":
+                                        Math.round(100*(usuario.aciertos/usuario.escritos)) > 70 ? "⭐⭐⭐":
                                         "⭐⭐"
                                     }</div>
                                 </div>

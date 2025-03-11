@@ -8,11 +8,11 @@ function Resultados(props){
       <div className="stats shadow border-2 border-indigo-800 flex justify-center">
         <div className="stat place-items-center hover:bg-gray-900">
             <div className="stat-title">Puntuacion</div>
-            <div className="stat-value">{Math.round((props.aciertos*0.4)+(props.errores*0.4)+(props.escritos*0.2))}</div>
+            <div className="stat-value">{Math.round(100*(props.aciertos/props.escritos))}</div>
             <div className="stat-desc">{
-                Math.round((props.aciertos*0.4)+(props.errores*0.4)+(props.escritos*0.2)) > 90 ? "⭐⭐⭐⭐⭐":
-                Math.round((props.aciertos*0.4)+(props.errores*0.4)+(props.escritos*0.2)) > 80 ? "⭐⭐⭐⭐":
-                Math.round((props.aciertos*0.4)+(props.errores*0.4)+(props.escritos*0.2)) > 70 ? "⭐⭐⭐":
+                Math.round(100*(props.aciertos/props.escritos)) > 90 ? "⭐⭐⭐⭐⭐":
+                Math.round(100*(props.aciertos/props.escritos)) > 80 ? "⭐⭐⭐⭐":
+                Math.round(100*(props.aciertos/props.escritos)) > 70 ? "⭐⭐⭐":
                 "⭐⭐"
             }</div>
         </div>
