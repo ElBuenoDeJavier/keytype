@@ -2,42 +2,19 @@ import React from "react";
 export default function OpcionesJuego({contador, establecerTiempo, establecerPalabras}){
     if(contador == false){
     return(
-        <div className="flex rounded-md shadow-xs justify-center mb-3" role="group">
-            <div className="mr-3">
-            <button onClick={establecerTiempo} value={10} type="button" className="px-4 py-2 text-2xl text-indigo-800 bg-transparent border 
-            border-indigo-800 rounded-s-lg hover:bg-gray-900 focus:z-10 focus:ring-2 focus:ring-indigo-400 focus:bg-indigo-800
-            focus:text-white">
-                10s
-            </button>
-            <button type="button" onClick={establecerTiempo} value={20} className="px-4 py-2 text-2xl font-medium text-indigo-800 bg-transparent border-t border-b 
-            border-indigo-800 hover:bg-gray-900 focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-indigo-800
-            focus:text-white">
-                20s
-            </button>
-            <button type="button" onClick={establecerTiempo} value={30} className="px-4 py-2 text-2xl font-medium text-indigo-800 bg-transparent border 
-            border-indigo-800 rounded-e-lg hover:bg-gray-900 focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-indigo-800
-            focus:text-white">
-                30s
-            </button>
+        <div>
+        <div className="navbar flex justify-center mb-3 ">
+            <div className="mr-1.5 shadow-sm">
+            <button onClick={establecerTiempo} value={10} className="btn btn-ghost rounded-md border border-indigo-800 text-white text-xl">10s</button>
+            <button onClick={establecerTiempo} value={20} className="btn btn-ghost rounded-md border border-indigo-800 text-white text-xl">20s</button>
+            <button onClick={establecerTiempo} value={30} className="btn btn-ghost rounded-md border border-indigo-800 text-white text-xl">30s</button>
             </div>
-
-            <div className="ml-3">
-            <button type="button" onClick={establecerPalabras} value={15} className="px-4 py-2 text-2xl text-indigo-800 bg-transparent border 
-            border-indigo-800 rounded-s-lg hover:bg-gray-900 focus:z-10 focus:ring-2 focus:ring-indigo-400 focus:bg-indigo-800
-            focus:text-white">
-                15 palabras
-            </button>
-            <button type="button" onClick={establecerPalabras} value={20} className="px-4 py-2 text-2xl font-medium text-indigo-800 bg-transparent border-t border-b 
-            border-indigo-800 hover:bg-gray-900 focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-indigo-800
-            focus:text-white">
-                20 palabras
-            </button>
-            <button type="button" onClick={establecerPalabras} value={40} className="px-4 py-2 text-2xl font-medium text-indigo-800 bg-transparent border 
-            border-indigo-800 rounded-e-lg hover:bg-gray-900 focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-indigo-800
-            focus:text-white">
-                40 palabras
-            </button>
+            <div className="ml-1.5">
+            <button onClick={establecerPalabras} value={15} className="btn btn-ghost rounded-md border border-indigo-800 text-white text-xl">15 palabras</button>
+            <button onClick={establecerPalabras} value={20} className="btn btn-ghost rounded-md border border-indigo-800 text-white text-xl">20 palabras</button>
+            <button onClick={establecerPalabras} value={40} className="btn btn-ghost rounded-md border border-indigo-800 text-white text-xl">40 palabras</button>
             </div>
+        </div>
         </div>
     );
     }

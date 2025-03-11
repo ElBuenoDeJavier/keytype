@@ -161,7 +161,7 @@ class App extends Component {
   //LO QUE SE MUESTRA
   render(){
     return (
-      <div className='bg-gray-950'>
+      <div>
       <Header 
       contador={this.state.contador} 
       pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} 
@@ -174,12 +174,17 @@ class App extends Component {
       
       <div className='font-mono items-center h-screen w-screen flex justify-center'>
         
-        <MostrarJuego mostrarlogin={this.state.mostrarlogin} mostrarestadisticas={this.state.mostrarestadisticas} mostrarjuego={this.state.mostrarjuego}>
+        <MostrarJuego 
+        mostrarlogin={this.state.mostrarlogin} 
+        mostrarestadisticas={this.state.mostrarestadisticas} 
+        mostrarjuego={this.state.mostrarjuego}
+        contador={this.state.contador}
+        teclaPresionada={this.state.teclaPresionada}>
             <OpcionesJuego 
             contador={this.state.contador}
             establecerTiempo={this.establecerTiempo.bind(this)} 
             establecerPalabras={this.establecerPalabras}/>
-            <Contador tiempoRestante={this.state.tiempo}/>
+            <Contador tiempoRestante={this.state.tiempo}/><br />
             <ReinicioBoton 
             reiniciar={this.reiniciar.bind(this)} 
             contador={this.state.contador}/>
@@ -203,6 +208,7 @@ class App extends Component {
             contador={this.state.contador}
             guardarEstadisticas={this.guardarEstadisticas.bind(this)}
             />
+            
           </MostrarJuego>
           
           <MostrarLogin mostrarlogin={this.state.mostrarlogin} mostrarestadisticas={this.state.mostrarestadisticas} mostrarjuego={this.state.mostrarjuego}>

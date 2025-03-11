@@ -28,8 +28,8 @@ export default class Estadisticas extends React.Component {
                 return 0;
             }
             );
-            //Para mostrar solo los 10 primeros corto el array hasta la posición 10
-            this.setState({arrayUsuarios: arrayUsuarios.splice(0,10)});
+            //Para mostrar solo los 10 primeros corto el array hasta la posición 4
+            this.setState({arrayUsuarios: arrayUsuarios.splice(0,4)});
         }else{
             console.error(data.message); 
         }
@@ -43,26 +43,50 @@ export default class Estadisticas extends React.Component {
     }
     render(){
         return (
-            <div>
-                <h1 className="text-white text-4xl text-center">10 mejores jugadores</h1>
-                <ol>
+            <ol>
+                <h1 className="text-6xl font-extrabold bg-gradient-to-bl from-blue-500 to-indigo-800 bg-clip-text text-transparent leading-normal text-center">TOP 4 JUGADORES</h1>
                     {this.state.arrayUsuarios.map((usuario, index) => {
                         return (
-                            <div key={index} className="bg-indigo-800 p-2 m-2 rounded-lg">
-                                <p className="text-white">{usuario.name} {
-                                Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2))} 
-                                {
-                                    Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 90 ? "⭐⭐⭐⭐⭐":
-                                    Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 80 ? "⭐⭐⭐⭐":
-                                    Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 70 ? "⭐⭐⭐":
-                                    "⭐⭐"
-                                }</p>
+                            <div className="mt-2 ">                            
+                                <div className="stats shadow border-2 border-indigo-800 flex justify-center">
+
+                                <div className="stat place-items-center hover:bg-indigo-800">
+                                    <div className="stat-title">Usuario</div>
+                                    <div className="stat-value font-extrabold bg-gradient-to-bl from-white to-indigo-700 bg-clip-text text-transparent leading-normal">{usuario.name}</div>
+                                </div>
+                            
+                                <div className="stat place-items-center hover:bg-gray-900">
+                                    <div className="stat-title">Puntuacion</div>
+                                    <div className="stat-value">{Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2))}</div>
+                                    <div className="stat-desc">{
+                                        Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 90 ? "⭐⭐⭐⭐⭐":
+                                        Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 80 ? "⭐⭐⭐⭐":
+                                        Math.round((usuario.aciertos*0.4)+(usuario.errores*0.4)+(usuario.escritos*0.2)) > 70 ? "⭐⭐⭐":
+                                        "⭐⭐"
+                                    }</div>
+                                </div>
+                                
+                                <div className="stat place-items-center hover:bg-green-800">
+                                    <div className="stat-title">Aciertos</div>
+                                    <div className="stat-value">{usuario.aciertos}</div>
+                                </div>
+                                
+                                <div className="stat place-items-center hover:bg-red-800">
+                                    <div className="stat-title">Errores</div>
+                                    <div className="stat-value">{usuario.errores}</div>
+                                </div>
+
+                                <div className="stat place-items-center hover:bg-gray-900">
+                                    <div className="stat-title">Caracteres escritos</div>
+                                    <div className="stat-value">{usuario.escritos}</div>
+                                </div>
+
+                                </div>
                             </div>
                         )
                     })}
-                </ol>
 
-            </div>
+            </ol>
         )
     }
 }

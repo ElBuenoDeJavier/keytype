@@ -4,13 +4,36 @@ function Resultados(props){
   //Lo muestra si el contador no esta iniciado y si se han escrito caracteres
     if(props.contador == false && props.escritos !== 0){
     return(
-      <ul className='text-3xl text-gray-600 text-center mt-20'>
-         <h2 className="text-indigo-800 text-3xl">Resultados:</h2>
-         <li>Caracteres acertados✅: {props.aciertos}</li>
-         <li>Errores cometidos❌: {props.errores}</li>
-         <li>Caracteres escritos⌨️: {props.escritos}</li>
-         <button onClick={()=>props.guardarEstadisticas()} className="text-white text-2xl mt-5 px-5 py-2 rounded-full bg-emerald-600 hover:bg-emerald-400">Guardar estadísticas</button>
-      </ul>
+      <div className="text-center">
+      <div className="stats shadow border-2 border-indigo-800 flex justify-center">
+        <div className="stat place-items-center hover:bg-gray-900">
+            <div className="stat-title">Puntuacion</div>
+            <div className="stat-value">{Math.round((props.aciertos*0.4)+(props.errores*0.4)+(props.escritos*0.2))}</div>
+            <div className="stat-desc">{
+                Math.round((props.aciertos*0.4)+(props.errores*0.4)+(props.escritos*0.2)) > 90 ? "⭐⭐⭐⭐⭐":
+                Math.round((props.aciertos*0.4)+(props.errores*0.4)+(props.escritos*0.2)) > 80 ? "⭐⭐⭐⭐":
+                Math.round((props.aciertos*0.4)+(props.errores*0.4)+(props.escritos*0.2)) > 70 ? "⭐⭐⭐":
+                "⭐⭐"
+            }</div>
+        </div>
+        
+        <div className="stat place-items-center hover:bg-green-800">
+            <div className="stat-title">Aciertos</div>
+            <div className="stat-value">{props.aciertos}</div>
+        </div>
+        
+        <div className="stat place-items-center hover:bg-red-800">
+            <div className="stat-title">Errores</div>
+            <div className="stat-value">{props.errores}</div>
+        </div>
+
+        <div className="stat place-items-center hover:bg-gray-900">
+            <div className="stat-title">Caracteres escritos</div>
+            <div className="stat-value">{props.escritos}</div>
+        </div>
+      </div>
+      <button onClick={()=>props.guardarEstadisticas()} className="text-white text-2xl mt-5 px-5 py-2 rounded-full btn hover:bg-gray-800">Guardar estadísticas</button>
+      </div>
     )
     }
 }
