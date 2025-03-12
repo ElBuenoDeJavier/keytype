@@ -4,7 +4,7 @@ export default function OpcionesJuego({contador, establecerTiempo, establecerPal
     return(
         <div>
             <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn m-1 text-xl">Tiempo
+            <div tabIndex={0} role="button" className="btn m-1 text-xl tooltip" data-tip="Establece el timepo límite">Tiempo
                 <svg class="h-8 w-8 text-indigo-600"  
                 viewBox="0 0 30 24"  
                 fill="none"  stroke="currentColor"  
@@ -19,7 +19,7 @@ export default function OpcionesJuego({contador, establecerTiempo, establecerPal
             </div>
 
             <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn m-1 text-xl">Palabras
+            <div tabIndex={0} role="button" className="btn m-1 text-xl tooltip" data-tip="Establece la cantidad de palabras">Palabras
             <svg class="h-8 w-8 text-indigo-600"  
             width="24" height="24" viewBox="0 0 24 24" 
             strokeWidth="2" stroke="currentColor" 
