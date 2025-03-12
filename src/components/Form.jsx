@@ -78,7 +78,8 @@ export default class Form extends Component {
         console.log("Usuario autenticado:", data.user);
         // Realiza cualquier acción adicional, como redirigir al usuario a otra página
         // AQUI DEBERIA REDIRIGIR AL USUARIO A LA PAGINA DEL USUARIO Y SUS ESTADISTICAS
-        alert('USUARIO AUTENTICADO: '+data.user.name+data.user.email+data.user.password);
+        alert('Inicio de sesion correcto para ',data.user.name);
+        this.props.iniciarSesion();
         //Guardo en el estado la informacion del usuario
         this.props.setDataUsuario(data.user);
       } else {

@@ -14,6 +14,7 @@ import ConfigUsuario from './components/ConfigUsuario';
 import Form from './components/Form';
 import MostrarEstadisticas from './components/MostrarEstadisticas';
 import Estadisticas from './components/Estadisticas';
+import mostrarLogin from './components/MostrarLogin';
 
 class App extends Component {
   constructor(props){
@@ -121,9 +122,14 @@ class App extends Component {
     this.setState({dataUsuario : data});
   }
 
+  iniciarSesion(){
+    this.setState({mostrarjuego: true, mostrarlogin: false});
+  }
+
   cerrarSesion(){
     this.setState({dataUsuario: false, mostrarConfigUsuario: false, mostrarjuego: true});
   }
+
   // PARA GUARDAR LAS ESTADÍSTICAS
   guardarEstadisticas = async () => {
     // PARA ACCEDER A LA RUTA DE MI BACKEND DONDE ESTA MI ROUTE
@@ -222,7 +228,10 @@ class App extends Component {
           mostrarestadisticas={this.state.mostrarestadisticas} 
           mostrarjuego={this.state.mostrarjuego} 
           mostrarConfigUsuario={this.state.mostrarConfigUsuario}>
-              <Form setDataUsuario={this.setDataUsuario.bind(this)}/>
+              <Form 
+              setDataUsuario={this.setDataUsuario.bind(this)}
+              iniciarSesion={this.iniciarSesion.bind(this)}
+              />
           </MostrarLogin>
           
           <MostrarEstadisticas 
