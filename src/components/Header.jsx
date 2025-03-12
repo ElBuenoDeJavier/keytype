@@ -6,7 +6,7 @@ function Header({contador, pulsarBotonLogin, pulsarLogo, dataUsuario, pulsarEsta
         <header className="font-mono absolute p-7 w-screen">
             <nav className="flex justify-between items-center mx-auto">
                 <div>
-                    <h1 onClick={pulsarLogo} className='text-5xl text-indigo-800 hover:scale-90'><img width={150} src="../../public/LOGOKEYTYPE.svg" alt="" /></h1>
+                    <h1 onClick={pulsarLogo} className='text-5xl text-indigo-800 hover:scale-90'><img width={150} src="LOGOKEYTYPE.svg" alt="" /></h1>
                 </div>
                 <div className="flex items-center gap-3">
 
