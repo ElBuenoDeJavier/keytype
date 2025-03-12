@@ -99,147 +99,68 @@ export default class Form extends Component {
   render(){
   if(this.state.mostrarLogin === true){
   return (
-    <div className="flex justify-center items-center min-h-full flex-1 px-6 py-12 lg:px-8 text-4xl">
-      <div className="flex space-x-8">
-        <div className="flex flex-col justify-center px-6 py-12 lg:px-8 text-4xl rounded-lg shadow-md">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mt-10 text-center font-bold tracking-tight text-white">
-              Accede a tu cuenta
-            </h2>
-          </div>
+    <div className='flex justify-center mt-30'>
+    <fieldset className="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box text-xl text-center">
+      <form onSubmit={this.handleSubmit}>
+      <legend className="fieldset-legend text-4xl font-extrabold bg-gradient-to-bl from-purple-500 to-indigo-800 bg-clip-text text-transparent leading-normal">Login</legend>
+      
+      <label className="fieldset-label">Email</label>
+      <input id="email"
+            name="email"
+            type="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            required className="input" placeholder="Email" />
 
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" onSubmit={this.handleSubmit}>
-              <div>
-                <label htmlFor="email" className="block text-2xl font-medium text-white">
-                  Correo electrónico
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                    required
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-2xl font-medium text-white">
-                    Password
-                  </label>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                    required
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Inicia sesión
-                </button>
-                <a className='text-indigo-600 hover:text-indigo-400 text-2xl flex justify-center mt-5' onClick={this.setMostrarLoginFalse}>Registra una cuenta</a>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      <label className="fieldset-label">Password</label>
+      <input id="password"
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            required className="input" placeholder="Password" />
+      
+      <button  type="submit" className="btn btn-neutral mt-4">Login</button><br />
+      <a className='text-indigo-700 hover:text-indigo-500 flex justify-center mt-5' onClick={this.setMostrarLoginFalse}>Registra una cuenta</a>
+      </form>
+    </fieldset>
     </div>
     );
     }else{
       return (
-        <div className="flex justify-center items-center min-h-full flex-1 px-6 py-12 lg:px-8 text-4xl">
-          <div className="flex space-x-8">
-            <div className="flex flex-col justify-center px-6 py-12 lg:px-8 text-4xl rounded-lg shadow-md">
-              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 className="mt-10 text-center font-bold tracking-tight text-white">
-                  Crea una cuenta
-                </h2>
-              </div>
-    
-              <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form onSubmit={this.handleSubmit} className="space-y-6">
-                  <div>
-                    <label htmlFor="nombre" className="block text-2xl font-medium text-white">
-                      Nombre
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="nombre"
-                        name="nombre"
-                        type="text"
-                        value={this.state.nombre}
-                        onChange={this.handleChange}
-                        required
-                        className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
+        <div className='flex justify-center mt-30'>
+        <fieldset className="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box text-xl text-center">
+        <form onSubmit={this.handleSubmit}>
+        <legend className="fieldset-legend text-4xl font-extrabold bg-gradient-to-bl from-purple-500 to-indigo-800 bg-clip-text text-transparent leading-normal">Register</legend>
+        
+        <label className="fieldset-label">Nombre</label>
+        <input id="nombre"
+              name="nombre"
+              type="text"
+              value={this.state.nombre}
+              onChange={this.handleChange}
+              required className="input" placeholder="Nombre" />
 
-                  <div>
-                    <label htmlFor="email" className="block text-2xl font-medium text-white">
-                      Correo electrónico
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                        required
-                        className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-    
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <label htmlFor="password" className="block text-2xl font-medium text-white">
-                        Password
-                      </label>
-                    </div>
-                    <div className="mt-2">
-                      <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        required
-                        className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                      />
-                    </div>
-                  </div>
-    
-                  <div>
-                    <button
-                      type="submit"
-                      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                      Registrarse
-                    </button>
-                    <a className='text-indigo-600 hover:text-indigo-400 text-2xl flex justify-center mt-5' onClick={this.setMostrarLoginTrue}>Inicia sesión</a>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+        <label className="fieldset-label">Email</label>
+        <input id="email"
+              name="email"
+              type="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              required className="input" placeholder="Email" />
+
+        <label className="fieldset-label">Password</label>
+        <input id="password"
+              name="password"
+              type="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+              required className="input" placeholder="Password" />
+        
+        <button  type="submit" className="btn btn-neutral mt-4">Registrarse</button><br />
+        <a className='text-indigo-700 hover:text-indigo-500 flex justify-center mt-5' onClick={this.setMostrarLoginTrue}>Inicia sesión</a>
+        </form>
+        </fieldset>
         </div>
         );
     }

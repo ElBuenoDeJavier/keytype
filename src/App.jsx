@@ -10,6 +10,7 @@ import { generarPalabrasAleatorias } from './palabrasAleatorias/generador';
 import OpcionesJuego from './components/OpcionesJuego';
 import MostrarJuego from './components/MostrarJuego';
 import MostrarLogin from './components/MostrarLogin';
+import ConfigUsuario from './components/ConfigUsuario';
 import Form from './components/Form';
 import MostrarEstadisticas from './components/MostrarEstadisticas';
 import Estadisticas from './components/Estadisticas';
@@ -31,6 +32,7 @@ class App extends Component {
       mostrarlogin: false,
       mostrarjuego: true,
       mostrarestadisticas: false,
+      mostrarConfigUsuario: false,
       //DATOS DEL USUARIO
       dataUsuario: false,
     }
@@ -106,12 +108,12 @@ class App extends Component {
 
   //PARA ESTABLECER EL NUMERO DE PALABRAS
   pulsarBotonLogin (){
-    this.setState({mostrarlogin : true, mostrarjuego: false, mostrarestadisticas: false});
+    this.setState({mostrarlogin : true, mostrarjuego: false, mostrarestadisticas: false, mostrarConfigUsuario: false,});
   }
 
   //Mostrar el juego si pulsas el logo
   pulsarLogo (){
-    this.setState({mostrarlogin : false, mostrarjuego: true, mostrarestadisticas: false});
+    this.setState({mostrarlogin : false, mostrarjuego: true, mostrarestadisticas: false, mostrarConfigUsuario: false,});
   }
 
   // OBTENER DATOS DEL USUARIO EN FORMATO JSON
@@ -119,6 +121,9 @@ class App extends Component {
     this.setState({dataUsuario : data});
   }
 
+  cerrarSesion(){
+    this.setState({dataUsuario: false, mostrarConfigUsuario: false, mostrarjuego: true});
+  }
   // PARA GUARDAR LAS ESTADÍSTICAS
   guardarEstadisticas = async () => {
     // PARA ACCEDER A LA RUTA DE MI BACKEND DONDE ESTA MI ROUTE
@@ -167,8 +172,8 @@ class App extends Component {
       pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} 
       pulsarLogo={this.pulsarLogo.bind(this)}
       //Para poner el estado a true y mostrar las estadísticas
-      pulsarEstadisticas={()=>this.setState({mostrarestadisticas : true, mostrarlogin: false, mostrarjuego: false})}
-      salirEstadisticas={()=>this.setState({mostrarestadisticas : false, mostrarjuego: true})}
+      pulsarEstadisticas={()=>this.setState({mostrarestadisticas : true, mostrarlogin: false, mostrarjuego: false, mostrarConfigUsuario: false,})}
+      pulsarUsuario={()=>this.setState({mostrarestadisticas : false, mostrarlogin: false, mostrarjuego: false, mostrarConfigUsuario: true,})}
       dataUsuario={this.state.dataUsuario}
       />
       
@@ -178,6 +183,7 @@ class App extends Component {
         mostrarlogin={this.state.mostrarlogin} 
         mostrarestadisticas={this.state.mostrarestadisticas} 
         mostrarjuego={this.state.mostrarjuego}
+        mostrarConfigUsuario={this.state.mostrarConfigUsuario}
         contador={this.state.contador}
         teclaPresionada={this.state.teclaPresionada}>
             <OpcionesJuego 
@@ -211,13 +217,31 @@ class App extends Component {
             
           </MostrarJuego>
           
-          <MostrarLogin mostrarlogin={this.state.mostrarlogin} mostrarestadisticas={this.state.mostrarestadisticas} mostrarjuego={this.state.mostrarjuego}>
+          <MostrarLogin 
+          mostrarlogin={this.state.mostrarlogin} 
+          mostrarestadisticas={this.state.mostrarestadisticas} 
+          mostrarjuego={this.state.mostrarjuego} 
+          mostrarConfigUsuario={this.state.mostrarConfigUsuario}>
               <Form setDataUsuario={this.setDataUsuario.bind(this)}/>
           </MostrarLogin>
           
-          <MostrarEstadisticas mostrarlogin={this.state.mostrarlogin} mostrarestadisticas={this.state.mostrarestadisticas} mostrarjuego={this.state.mostrarjuego}>
+          <MostrarEstadisticas 
+          mostrarlogin={this.state.mostrarlogin} 
+          mostrarestadisticas={this.state.mostrarestadisticas} 
+          mostrarjuego={this.state.mostrarjuego} 
+          mostrarConfigUsuario={this.state.mostrarConfigUsuario}>
               <Estadisticas/>
           </MostrarEstadisticas>
+
+          <ConfigUsuario 
+          dataUsuario={this.state.dataUsuario}
+
+          mostrarlogin={this.state.mostrarlogin} 
+          mostrarestadisticas={this.state.mostrarestadisticas} 
+          mostrarjuego={this.state.mostrarjuego} 
+          mostrarConfigUsuario={this.state.mostrarConfigUsuario}
+          
+          cerrarSesion={this.cerrarSesion.bind(this)}/>
       </div>
     </div>
     )

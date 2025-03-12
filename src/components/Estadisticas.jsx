@@ -59,7 +59,7 @@ export default class Estadisticas extends React.Component {
                                     <div className="stat-title">Puntuacion</div>
                                     <div className="stat-value">{Math.round(100*(usuario.aciertos/usuario.escritos))}</div>
                                     <div className="stat-desc">{
-                                        Math.round(100*(usuario.aciertos/usuario.escritos)) > 90 ? "⭐⭐⭐⭐⭐":
+                                        Math.round(100*(usuario.aciertos/usuario.escritos)) == 100 ? "⭐⭐⭐⭐⭐":
                                         Math.round(100*(usuario.aciertos/usuario.escritos)) > 80 ? "⭐⭐⭐⭐":
                                         Math.round(100*(usuario.aciertos/usuario.escritos)) > 70 ? "⭐⭐⭐":
                                         "⭐⭐"

@@ -10,7 +10,7 @@ function Resultados(props){
             <div className="stat-title">Puntuacion</div>
             <div className="stat-value">{Math.round(100*(props.aciertos/props.escritos))}</div>
             <div className="stat-desc">{
-                Math.round(100*(props.aciertos/props.escritos)) > 90 ? "⭐⭐⭐⭐⭐":
+                Math.round(100*(props.aciertos/props.escritos)) == 100 ? "⭐⭐⭐⭐⭐":
                 Math.round(100*(props.aciertos/props.escritos)) > 80 ? "⭐⭐⭐⭐":
                 Math.round(100*(props.aciertos/props.escritos)) > 70 ? "⭐⭐⭐":
                 "⭐⭐"
