@@ -113,7 +113,7 @@ class App extends Component {
   }
 
   //Mostrar el juego si pulsas el logo
-  pulsarLogo (){
+  volverInicio (){
     this.setState({mostrarlogin : false, mostrarjuego: true, mostrarestadisticas: false, mostrarConfigUsuario: false,});
   }
 
@@ -176,7 +176,7 @@ class App extends Component {
       <Header 
       contador={this.state.contador} 
       pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} 
-      pulsarLogo={this.pulsarLogo.bind(this)}
+      pulsarLogo={this.volverInicio.bind(this)}
       //Para poner el estado a true y mostrar las estadísticas
       pulsarEstadisticas={()=>this.setState({mostrarestadisticas : true, mostrarlogin: false, mostrarjuego: false, mostrarConfigUsuario: false,})}
       pulsarUsuario={()=>this.setState({mostrarestadisticas : false, mostrarlogin: false, mostrarjuego: false, mostrarConfigUsuario: true,})}
@@ -231,6 +231,7 @@ class App extends Component {
               <Form 
               setDataUsuario={this.setDataUsuario.bind(this)}
               iniciarSesion={this.iniciarSesion.bind(this)}
+              volverInicio={this.volverInicio.bind(this)}
               />
           </MostrarLogin>
           
@@ -239,7 +240,7 @@ class App extends Component {
           mostrarestadisticas={this.state.mostrarestadisticas} 
           mostrarjuego={this.state.mostrarjuego} 
           mostrarConfigUsuario={this.state.mostrarConfigUsuario}>
-              <Estadisticas/>
+              <Estadisticas volverInicio={this.volverInicio.bind(this)}/>
           </MostrarEstadisticas>
 
           <ConfigUsuario 
@@ -250,7 +251,9 @@ class App extends Component {
           mostrarjuego={this.state.mostrarjuego} 
           mostrarConfigUsuario={this.state.mostrarConfigUsuario}
           
-          cerrarSesion={this.cerrarSesion.bind(this)}/>
+          cerrarSesion={this.cerrarSesion.bind(this)}
+          
+          volverInicio={this.volverInicio.bind(this)}/>
       </div>
     </div>
     )

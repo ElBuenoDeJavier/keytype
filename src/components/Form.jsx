@@ -100,7 +100,7 @@ export default class Form extends Component {
   render(){
   if(this.state.mostrarLogin === true){
   return (
-    <div className='flex justify-center mt-30'>
+    <div className='grid justify-center mt-30'>
     <fieldset className="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box text-xl text-center">
       <form onSubmit={this.handleSubmit}>
       <legend className="fieldset-legend text-4xl font-extrabold bg-gradient-to-bl from-purple-500 to-indigo-800 bg-clip-text text-transparent leading-normal">Login</legend>
@@ -125,11 +125,12 @@ export default class Form extends Component {
       <a className='text-indigo-700 hover:text-indigo-500 flex justify-center mt-5' onClick={this.setMostrarLoginFalse}>Registra una cuenta</a>
       </form>
     </fieldset>
+    <button onClick={this.props.volverInicio} className='underline mt-10 hover:text-indigo-600'>Volver</button>
     </div>
     );
     }else{
       return (
-        <div className='flex justify-center mt-30'>
+        <div className='grid justify-center mt-30'>
         <fieldset className="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box text-xl text-center">
         <form onSubmit={this.handleSubmit}>
         <legend className="fieldset-legend text-4xl font-extrabold bg-gradient-to-bl from-purple-500 to-indigo-800 bg-clip-text text-transparent leading-normal">Register</legend>
@@ -162,6 +163,7 @@ export default class Form extends Component {
         <a className='text-indigo-700 hover:text-indigo-500 flex justify-center mt-5' onClick={this.setMostrarLoginTrue}>Inicia sesión</a>
         </form>
         </fieldset>
+        <button onClick={this.props.volverInicio} className='underline mt-10 hover:text-indigo-600'>Volver</button>
         </div>
         );
     }

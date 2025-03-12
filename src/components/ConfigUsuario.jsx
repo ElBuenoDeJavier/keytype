@@ -1,5 +1,5 @@
 import React from 'react';
-function Contador({mostrarlogin, mostrarestadisticas, mostrarConfigUsuario, dataUsuario, cerrarSesion}){
+function Contador({mostrarlogin, mostrarestadisticas, mostrarConfigUsuario, dataUsuario, cerrarSesion, volverInicio}){
     if (!mostrarlogin && !mostrarestadisticas && mostrarConfigUsuario){
         return(
             <div className="mockup-browser border border-base-300 w-4/12 h-6/12">
@@ -23,6 +23,7 @@ function Contador({mostrarlogin, mostrarestadisticas, mostrarConfigUsuario, data
                     </div>
                     <button onClick={cerrarSesion} className='btn btn-error'>Cerrar sesion</button>
                 </div>
+                <button onClick={volverInicio} className='underline mt-10 hover:text-indigo-600'>Volver</button>
             </div>
           </div>
         ) 
