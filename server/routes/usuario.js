@@ -34,14 +34,17 @@ router.post("/register", async (req, res) => {
     // COMPROBAR QUE NO EXISTE UN USUARIO CON EL MISMO CORREO
     if(!user){
         let result = await collection.insertOne(nuevoUsuario);
-        res.send(result).status(204);
+        //Devuelve un código de estado Created(se ha creado un nuevo recurso) y la respuesta
+        res.status(201).send(result);
     }else{
+        //Devuelve el código de estado Unauthorized
         return res.status(401).send({message:"Ya existe un usuario con este correo"});
     }
     
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error adding usuario");
+    // Devuelve un error interno al crear el usuario
+    res.status(500).send("Error creando usuario");
   }
 });
 
@@ -55,10 +58,10 @@ router.post("/login", async (req, res) => {
     
         // El usuario existe y si la contraseña es correcta
         if (!user) {
-            //codigo 404 not found, que no se ha encontrado el usuario
+        //Devualve un código 404 not found significa que no se ha encontrado el usuario
           return res.status(404).send({message: "Usuario no encontrado"});
         }
-        // Comparar la contraseña 
+        //comparar la contraseña 
         if (user.password !== req.body.password) {
             //devuelve el codigo 401 que es no autorizado y el mensaje
           return res.status(401).send({message:"Contraseña incorrecta"});
@@ -82,7 +85,7 @@ router.delete("/:id", async (req, res) => {
     const collection = db.collection("usuarios");
     let result = await collection.deleteOne(query);
 
-    res.send(result).status(200);
+    res.status(200).send(result);
   } catch (err) {
     console.error(err);
     res.status(500).send("Error deleting usuario");

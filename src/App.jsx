@@ -14,7 +14,7 @@ import ConfigUsuario from './components/ConfigUsuario';
 import Form from './components/Form';
 import MostrarEstadisticas from './components/MostrarEstadisticas';
 import Estadisticas from './components/Estadisticas';
-import mostrarLogin from './components/MostrarLogin';
+import SalirJuego from './components/SalirJuego';
 
 class App extends Component {
   constructor(props){
@@ -29,7 +29,7 @@ class App extends Component {
       aciertos: 0,
       errores: 0,
       escritos: 0,
-      //Para mostrar el div del login
+      //Sirven para mostrar cada pantalla
       mostrarlogin: false,
       mostrarjuego: true,
       mostrarestadisticas: false,
@@ -83,6 +83,9 @@ class App extends Component {
     this.setState({ intervalo: nuevoIntervalo });    
   }
 
+  salirJuego(){
+    this.setState({contador: false, tiempo: 30,});
+  }
   //Calcula los aciertos, errores y escritos en tiempo real
   calcularEstadisticas(){
     //obtengo la entrada del usuario y las palabras originales y la divido por espacios en un array caracteres
@@ -96,6 +99,7 @@ class App extends Component {
   }
 
   //PARA ESTABLECER EL TIEMPO CON LA BOTONERA
+  //El valor que se le pasa como parámetro se guardará en el state de tiempo
   establecerTiempo(event){
     return(
       this.setState({tiempo : event.target.value})
@@ -103,25 +107,27 @@ class App extends Component {
   }
 
   //PARA ESTABLECER EL NUMERO DE PALABRAS
+  //El valor que se le pasa como parámetro se guardará en el state de palabras
   establecerPalabras = (event)=>{
     this.setState({palabras : generarPalabrasAleatorias(event.target.value)});
   }
 
-  //PARA ESTABLECER EL NUMERO DE PALABRAS
+  //Cuando pulses el botón de iniciar sesión establece a todos los mostrar en false
+  //y pone en true el mostrar de login
   pulsarBotonLogin (){
     this.setState({mostrarlogin : true, mostrarjuego: false, mostrarestadisticas: false, mostrarConfigUsuario: false,});
   }
 
-  //Mostrar el juego si pulsas el logo
+  //Funcion que si es llamada muestra el juego
   volverInicio (){
     this.setState({mostrarlogin : false, mostrarjuego: true, mostrarestadisticas: false, mostrarConfigUsuario: false,});
   }
 
-  // OBTENER DATOS DEL USUARIO EN FORMATO JSON
+  // GUARDAR DATOS DEL USUARIO EN FORMATO JSON
   setDataUsuario(data){
     this.setState({dataUsuario : data});
   }
-
+  //Funcion que se llamará cuando se haya iniciado sesión para que redirija a inicio
   iniciarSesion(){
     this.setState({mostrarjuego: true, mostrarlogin: false});
   }
@@ -130,7 +136,7 @@ class App extends Component {
     this.setState({dataUsuario: false, mostrarConfigUsuario: false, mostrarjuego: true});
   }
 
-  // PARA GUARDAR LAS ESTADÍSTICAS
+  // CONSULTA AL SERVIDOR PARA GUARDAR LAS ESTADÍSTICAS EN LA BASE DE DATOS
   guardarEstadisticas = async () => {
     // PARA ACCEDER A LA RUTA DE MI BACKEND DONDE ESTA MI ROUTE
     const endpoint = 'http://localhost:5050/puntuacion/add';
@@ -146,24 +152,26 @@ class App extends Component {
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
+        //Significa que devolverá un json
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
       const data = await response.json();
       //Si la respuesta no es true me devuelve la excepcion con el error
       if (response.ok){
-        alert('Se han guardado tus estadísticas');
-        //Para reiniciar los valores de los aciertos, errores y escritos
-        // Y que no se muestren por pantalla
+        // SE MUESTRA UN ALERT PARA INDICAR QUE HE GUARDADO LA INFORMACIÓN
+        alert('Información guardada correctamente.');
+        //Como ya se ha guardado se reinician los valores del state a 0 para que no sigan
+        //apareciendo por pantalla
         this.setState({aciertos:0,errores:0,escritos:0});
       }else{
         // LA RESPUESTA NO ES CORRECTA, hay algun problema al crearlo
         console.error(data.message); 
-        // Mostrar el mensaje de error
+        // Mostrar el mensaje de error en un alert
         alert(data.message);
       }
     } catch (error) {
-      // Si hay algun error lo capturo
+      // Si hay algun error en la petición lo capturo
       console.error('Error:', error);
       alert('Error:'+ error);
     }
@@ -174,11 +182,13 @@ class App extends Component {
     return (
       <div>
       <Header 
+      //Para controlar que no está iniciado el contador y poder mostrar el header
       contador={this.state.contador} 
       pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} 
       pulsarLogo={this.volverInicio.bind(this)}
       //Para poner el estado a true y mostrar las estadísticas
       pulsarEstadisticas={()=>this.setState({mostrarestadisticas : true, mostrarlogin: false, mostrarjuego: false, mostrarConfigUsuario: false,})}
+      // Cuando pulsas el boton del usuario accedes a su pantalla
       pulsarUsuario={()=>this.setState({mostrarestadisticas : false, mostrarlogin: false, mostrarjuego: false, mostrarConfigUsuario: true,})}
       dataUsuario={this.state.dataUsuario}
       />
@@ -193,9 +203,11 @@ class App extends Component {
         contador={this.state.contador}
         teclaPresionada={this.state.teclaPresionada}>
             <OpcionesJuego 
+            //Para controlar que no está iniciado el contador y poder mostrar las opciones
             contador={this.state.contador}
             establecerTiempo={this.establecerTiempo.bind(this)} 
             establecerPalabras={this.establecerPalabras}/>
+
             <Contador tiempoRestante={this.state.tiempo}/><br />
             <ReinicioBoton 
             reiniciar={this.reiniciar.bind(this)} 
@@ -212,6 +224,9 @@ class App extends Component {
               handleInputChange={this.handleInputChange} 
               palabras={this.state.palabras}/>
             </div>
+            <SalirJuego 
+            salirJuego={this.salirJuego.bind(this)}
+            contador={this.state.contador}/>
             
             <Resultados 
             aciertos = {this.state.aciertos} 
@@ -240,6 +255,7 @@ class App extends Component {
           mostrarestadisticas={this.state.mostrarestadisticas} 
           mostrarjuego={this.state.mostrarjuego} 
           mostrarConfigUsuario={this.state.mostrarConfigUsuario}>
+
               <Estadisticas volverInicio={this.volverInicio.bind(this)}/>
           </MostrarEstadisticas>
 
