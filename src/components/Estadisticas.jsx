@@ -86,7 +86,7 @@ export default class Estadisticas extends React.Component {
                         )
                     })}
                     <div className="flex justify-center">
-                    <button onClick={this.props.volverInicio} className='underline mt-10 hover:text-indigo-600'>Volver</button>
+                    <button onClick={this.props.volverInicio} className='cursor-pointer underline mt-10 hover:text-indigo-600'>Volver</button>
                     </div>
             </ol>
             

@@ -125,7 +125,7 @@ export default class Form extends Component {
       <a className='text-indigo-700 hover:text-indigo-500 flex justify-center mt-5' onClick={this.setMostrarLoginFalse}>Registra una cuenta</a>
       </form>
     </fieldset>
-    <button onClick={this.props.volverInicio} className='underline mt-10 hover:text-indigo-600'>Volver</button>
+    <button onClick={this.props.volverInicio} className='cursor-pointer underline mt-10 hover:text-indigo-600'>Volver</button>
     </div>
     );
     }else{
@@ -163,7 +163,7 @@ export default class Form extends Component {
         <a className='text-indigo-700 hover:text-indigo-500 flex justify-center mt-5' onClick={this.setMostrarLoginTrue}>Inicia sesión</a>
         </form>
         </fieldset>
-        <button onClick={this.props.volverInicio} className='underline mt-10 hover:text-indigo-600'>Volver</button>
+        <button onClick={this.props.volverInicio} className='cursor-pointer underline mt-10 hover:text-indigo-600'>Volver</button>
         </div>
         );
     }
