@@ -5,6 +5,7 @@ function Resultados(props){
     if(props.contador == false && props.escritos !== 0){
     return(
       <div className="text-center">
+      <h1 className="flex justify-center fieldset-legend text-4xl font-extrabold bg-gradient-to-bl from-purple-500 to-indigo-800 bg-clip-text text-transparent leading-normal">Resultados</h1>
       <div className="stats shadow border-2 border-indigo-800 flex justify-center">
         <div className="stat place-items-center hover:bg-gray-900">
             <div className="stat-title">Puntuacion</div>

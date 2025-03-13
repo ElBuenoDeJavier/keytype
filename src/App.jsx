@@ -84,7 +84,7 @@ class App extends Component {
   }
 
   salirJuego(){
-    this.setState({contador: false, tiempo: 30,});
+    this.setState({intervalo: null, contador: false, tiempo: 0,});
   }
   //Calcula los aciertos, errores y escritos en tiempo real
   calcularEstadisticas(){
