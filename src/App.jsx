@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-//importo la función de generar palabras
+import { Route, Routes, Navigate } from 'react-router-dom';
+import withNavigate from './withNavigate';
 import Header from './components/Header';
+//importo la función que genera mis palabras aleatorias
 import GenerarPalabras from './components/GenerarPalabras';
 import Contador from './components/Contador';
 import InputUsuario from './components/InputUsuario';
@@ -29,11 +31,6 @@ class App extends Component {
       aciertos: 0,
       errores: 0,
       escritos: 0,
-      //Sirven para mostrar cada pantalla
-      mostrarlogin: false,
-      mostrarjuego: true,
-      mostrarestadisticas: false,
-      mostrarConfigUsuario: false,
       //DATOS DEL USUARIO
       dataUsuario: false,
     }
@@ -112,28 +109,18 @@ class App extends Component {
     this.setState({palabras : generarPalabrasAleatorias(event.target.value)});
   }
 
-  //Cuando pulses el botón de iniciar sesión establece a todos los mostrar en false
-  //y pone en true el mostrar de login
-  pulsarBotonLogin (){
-    this.setState({mostrarlogin : true, mostrarjuego: false, mostrarestadisticas: false, mostrarConfigUsuario: false,});
-  }
-
-  //Funcion que si es llamada muestra el juego
-  volverInicio (){
-    this.setState({mostrarlogin : false, mostrarjuego: true, mostrarestadisticas: false, mostrarConfigUsuario: false,});
-  }
-
   // GUARDAR DATOS DEL USUARIO EN FORMATO JSON
   setDataUsuario(data){
     this.setState({dataUsuario : data});
   }
   //Funcion que se llamará cuando se haya iniciado sesión para que redirija a inicio
   iniciarSesion(){
-    this.setState({mostrarjuego: true, mostrarlogin: false});
+    this.props.navigate('/');
   }
 
   cerrarSesion(){
-    this.setState({dataUsuario: false, mostrarConfigUsuario: false, mostrarjuego: true});
+    this.setState({dataUsuario: false});
+    this.props.navigate('/');
   }
 
   // CONSULTA AL SERVIDOR PARA GUARDAR LAS ESTADÍSTICAS EN LA BASE DE DATOS
@@ -177,103 +164,87 @@ class App extends Component {
     }
   }
 
-  //LO QUE SE MUESTRA
   render(){
     return (
       <div>
-      <Header 
-      //Para controlar que no está iniciado el contador y poder mostrar el header
-      contador={this.state.contador} 
-      pulsarBotonLogin={this.pulsarBotonLogin.bind(this)} 
-      pulsarLogo={this.volverInicio.bind(this)}
-      //Para poner el estado a true y mostrar las estadísticas
-      pulsarEstadisticas={()=>this.setState({mostrarestadisticas : true, mostrarlogin: false, mostrarjuego: false, mostrarConfigUsuario: false,})}
-      // Cuando pulsas el boton del usuario accedes a su pantalla
-      pulsarUsuario={()=>this.setState({mostrarestadisticas : false, mostrarlogin: false, mostrarjuego: false, mostrarConfigUsuario: true,})}
-      dataUsuario={this.state.dataUsuario}
-      />
-      
-      <div className='font-mono items-center h-screen w-screen flex justify-center'>
-        
-        <MostrarJuego 
-        mostrarlogin={this.state.mostrarlogin} 
-        mostrarestadisticas={this.state.mostrarestadisticas} 
-        mostrarjuego={this.state.mostrarjuego}
-        mostrarConfigUsuario={this.state.mostrarConfigUsuario}
-        contador={this.state.contador}
-        teclaPresionada={this.state.teclaPresionada}>
-            <OpcionesJuego 
-            //Para controlar que no está iniciado el contador y poder mostrar las opciones
-            contador={this.state.contador}
-            establecerTiempo={this.establecerTiempo.bind(this)} 
-            establecerPalabras={this.establecerPalabras}/>
-
-            <Contador tiempoRestante={this.state.tiempo}/><br />
-            <ReinicioBoton 
-            reiniciar={this.reiniciar.bind(this)} 
-            contador={this.state.contador}/>
-            
-            <div className='relative mt-3 leading-relaxed inset-0 text-3xl break-all'>
-              <GenerarPalabras 
-              words={this.state.palabras} 
-              className='absolute inset-0'/>
-              
-              <InputUsuario 
-              className='absolute inset-0 ' 
-              entradaUsuario={this.state.entradaUsuario} 
-              handleInputChange={this.handleInputChange} 
-              palabras={this.state.palabras}/>
-            </div>
-            <SalirJuego 
-            salirJuego={this.salirJuego.bind(this)}
-            contador={this.state.contador}/>
-            
-            <Resultados 
-            aciertos = {this.state.aciertos} 
-            errores={this.state.errores} 
-            escritos={this.state.escritos} 
-            contador={this.state.contador}
-            guardarEstadisticas={this.guardarEstadisticas.bind(this)}
-            />
-            
-          </MostrarJuego>
-          
-          <MostrarLogin 
-          mostrarlogin={this.state.mostrarlogin} 
-          mostrarestadisticas={this.state.mostrarestadisticas} 
-          mostrarjuego={this.state.mostrarjuego} 
-          mostrarConfigUsuario={this.state.mostrarConfigUsuario}>
-              <Form 
-              setDataUsuario={this.setDataUsuario.bind(this)}
-              iniciarSesion={this.iniciarSesion.bind(this)}
-              volverInicio={this.volverInicio.bind(this)}
-              />
-          </MostrarLogin>
-          
-          <MostrarEstadisticas 
-          mostrarlogin={this.state.mostrarlogin} 
-          mostrarestadisticas={this.state.mostrarestadisticas} 
-          mostrarjuego={this.state.mostrarjuego} 
-          mostrarConfigUsuario={this.state.mostrarConfigUsuario}>
-
-              <Estadisticas volverInicio={this.volverInicio.bind(this)}/>
-          </MostrarEstadisticas>
-
-          <ConfigUsuario 
+        <Header 
+          //Para controlar que no está iniciado el contador y poder mostrar el header
+          contador={this.state.contador} 
+          //cuando pulsas el botón de login te lleva a la página de login
+          pulsarBotonLogin={() => this.props.navigate('/login')} 
+          //para volver a la página de inicio
+          pulsarLogo={() => this.props.navigate('/')}
+          //Para poner el estado a true y mostrar las estadísticas
+          pulsarEstadisticas={() => this.props.navigate('/estadisticas')}
+          pulsarUsuario={() => this.props.navigate('/configuracion')}
           dataUsuario={this.state.dataUsuario}
-
-          mostrarlogin={this.state.mostrarlogin} 
-          mostrarestadisticas={this.state.mostrarestadisticas} 
-          mostrarjuego={this.state.mostrarjuego} 
-          mostrarConfigUsuario={this.state.mostrarConfigUsuario}
-          
-          cerrarSesion={this.cerrarSesion.bind(this)}
-          
-          volverInicio={this.volverInicio.bind(this)}/>
+        />
+        
+        <div className='font-mono items-center h-screen w-screen flex justify-center'>
+          <Routes>
+            <Route exact path="/" element={
+              <MostrarJuego>
+                <OpcionesJuego 
+                  contador={this.state.contador}
+                  establecerTiempo={this.establecerTiempo.bind(this)} 
+                  establecerPalabras={this.establecerPalabras}/>
+                <Contador tiempoRestante={this.state.tiempo}/>
+                <ReinicioBoton 
+                  reiniciar={this.reiniciar.bind(this)} 
+                  contador={this.state.contador}/>
+                
+                <div className='relative mt-3 leading-relaxed inset-0 text-3xl break-all'>
+                  <GenerarPalabras 
+                    words={this.state.palabras} 
+                    className='absolute inset-0'/>
+                  
+                  <InputUsuario 
+                    className='absolute inset-0 ' 
+                    entradaUsuario={this.state.entradaUsuario} 
+                    handleInputChange={this.handleInputChange} 
+                    palabras={this.state.palabras}/>
+                </div>
+                
+                <SalirJuego 
+                  salirJuego={this.salirJuego.bind(this)}
+                  contador={this.state.contador}/>
+                
+                <Resultados 
+                  aciertos = {this.state.aciertos} 
+                  errores={this.state.errores} 
+                  escritos={this.state.escritos} 
+                  contador={this.state.contador}
+                  guardarEstadisticas={this.guardarEstadisticas.bind(this)}
+                />
+              </MostrarJuego>
+            } />
+            <Route path="/login" element={
+              <MostrarLogin>
+                <Form 
+                  setDataUsuario={this.setDataUsuario.bind(this)}
+                  iniciarSesion={this.iniciarSesion.bind(this)}
+                  volverInicio={() => this.props.navigate('/')}
+                />
+              </MostrarLogin>
+            } />
+            <Route path="/estadisticas" element={
+              <MostrarEstadisticas>
+                <Estadisticas volverInicio={() => this.props.navigate('/')}/>
+              </MostrarEstadisticas>
+            } />
+            <Route path="/configuracion" element={
+              <ConfigUsuario 
+                dataUsuario={this.state.dataUsuario}
+                cerrarSesion={this.cerrarSesion.bind(this)}
+                volverInicio={() => this.props.navigate('/')}
+              />
+            } />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
       </div>
-    </div>
     )
   }
 }
 
-export default App
+export default withNavigate(App);
