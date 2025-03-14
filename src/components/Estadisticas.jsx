@@ -17,7 +17,18 @@ export default class Estadisticas extends React.Component {
         const data = await response.json();
         if (response.ok){
             const arrayUsuarios = data;
-            //Para ordenar los usuarios por aciertos
+            //Para ordernar a los usuario por caracteres escritos
+            arrayUsuarios.sort((a, b) => {
+                if (a.escritos > b.escritos) {
+                    return -1;
+                }
+                if (a.escritos < b.escritos) {
+                    return 1;
+                }
+                return 0;
+            }
+            );
+            //Para ordenar los usuarios por puntaje
             arrayUsuarios.sort((a, b) => {
                 if ((Math.round(100*(a.aciertos/a.escritos))) > (Math.round(100*(b.aciertos/b.escritos)))) {
                     return -1;
@@ -26,8 +37,7 @@ export default class Estadisticas extends React.Component {
                     return 1;
                 }
                 return 0;
-            }
-            );
+            });
             //Para mostrar solo los 10 primeros corto el array hasta la posición 4
             this.setState({arrayUsuarios: arrayUsuarios.splice(0,4)});
         }else{
