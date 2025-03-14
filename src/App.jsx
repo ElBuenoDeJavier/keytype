@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+// Importo las rutas para poder navegar
 import { Route, Routes, Navigate } from 'react-router-dom';
-import withNavigate from './withNavigate';
+//importo el HOC porque use navigate solo puede ser usado dentro de class components.
+import usarNavegacion from './usarNavegacion';
+
 import Header from './components/Header';
 //importo la función que genera mis palabras aleatorias
 import GenerarPalabras from './components/GenerarPalabras';
@@ -35,7 +38,6 @@ class App extends Component {
       dataUsuario: false,
     }
   }
-
   //función que reinicia las palabras generadas, la entrada del usuario y el contador
   //también limpia el intervalo
   reiniciar(){
@@ -113,11 +115,12 @@ class App extends Component {
   setDataUsuario(data){
     this.setState({dataUsuario : data});
   }
-  //Funcion que se llamará cuando se haya iniciado sesión para que redirija a inicio
+
+  //Cuando se llame a esta funcion navegara al componente con la ruta /
   iniciarSesion(){
     this.props.navigate('/');
   }
-
+  // Eliminara los datos del state y redirigira a /
   cerrarSesion(){
     this.setState({dataUsuario: false});
     this.props.navigate('/');
@@ -181,6 +184,7 @@ class App extends Component {
         />
         
         <div className='font-mono items-center h-screen w-screen flex justify-center'>
+          {/*Se definen las rutas para cada componente */}
           <Routes>
             <Route exact path="/" element={
               <MostrarJuego>
@@ -239,6 +243,7 @@ class App extends Component {
                 volverInicio={() => this.props.navigate('/')}
               />
             } />
+            {/* Si no se define una URL mandara a /*/}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
@@ -247,4 +252,4 @@ class App extends Component {
   }
 }
 
-export default withNavigate(App);
+export default usarNavegacion(App);
