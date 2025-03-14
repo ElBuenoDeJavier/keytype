@@ -54,7 +54,8 @@ export default class Estadisticas extends React.Component {
     render(){
         return (
             <ol>
-                <h1 className="text-6xl font-extrabold bg-gradient-to-bl from-blue-500 to-indigo-800 bg-clip-text text-transparent leading-normal text-center">TOP 4 JUGADORES</h1>
+                <h1 className="text-6xl font-extrabold bg-gradient-to-bl from-blue-500 to-indigo-800 bg-clip-text text-transparent leading-normal text-center">
+                    TOP <span className="animate-pulse text-6xl font-extrabold bg-gradient-to-b from-green-500 to-orange-700 bg-clip-text text-transparent leading-normal text-center">4</span> JUGADORES</h1>
                     {this.state.arrayUsuarios.map((usuario, index) => {
                         return (
                             <div className="mt-2 ">                            
