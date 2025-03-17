@@ -106,7 +106,8 @@ const listaPalabras = ['a', 'abajo', 'abandonar', 'abrir', 'absoluta', 'absoluto
     'verdadero', 'verde', 'vestir', 'vez', 'viaje', 'vida', 'vieja', 'viejo', 'viento', 'violencia',
     'vista', 'viva', 'vivir', 'vivo', 'voces', 'voluntad', 'volver', 'voz', 'vuelta', 'y',
     'ya', 'yo', 'zona', 'árbol', 'él', 'época', 'ésta', 'éste', 'éxito', 'última',
-    'último', 'única', 'único','Raquel','totana','DAW','TFG','uberos','gta'
+    'último', 'única', 'único','Raquel','totana','DAW','TFG','uberos','gta','Baldomero',
+    'Alienigena','invertido'
 ];
 // le pasas como parametro un numero para cortar el array aleatorio
 export function generarPalabrasAleatorias(num){
