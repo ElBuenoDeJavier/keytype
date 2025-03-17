@@ -250,7 +250,7 @@ class App extends Component {
                   escritos={this.state.escritos} 
                   contador={this.state.contador}
                   guardarEstadisticas={this.guardarEstadisticas.bind(this)}
-                />
+                /> 
               </MostrarJuego>
             } />
             <Route path="/login" element={
