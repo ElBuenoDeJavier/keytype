@@ -15,6 +15,7 @@ app.use(cors({
 })); // habilita cors para permitir peticiones desde fuera
 app.use(express.json()); // permite el procesamiento json en las solicitudes
 app.use(cookieParser()); //permite el uso de cookies
+// debe ir antes para que pueda leer las cookies
 app.use("/usuario", usuarios); // definicion de ruta
 app.use("/puntuacion", puntuacion);
 
