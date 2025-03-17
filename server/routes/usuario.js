@@ -70,7 +70,7 @@ router.post("/login", async (req, res) => {
         }
         //NO HA FALLADO NINGUNA COMPROBACION ENTONCES EXISTE Y ES CORRECTO
         //Crear un token jwt firmado con la secret key EN 1 HORA
-        const token = jwt.sign({ id: user._id }, 
+        const token = jwt.sign({ id: user._id}, 
           secret, {expiresIn: "1h"});
         // SE LE DEVUELVE AL CLIENTE UN MENSAJE DE CORRECTO Y EL USUARIO y un token
         // se debe mandar también en la respuesta el token para que el cliente pueda usarlo en cookies
@@ -87,9 +87,44 @@ router.post("/login", async (req, res) => {
         res.status(500).send({message: "Error al iniciar sesión"});
       }
   });
-
-
   
+  router.get("/autenticado", async (req, res) => {
+    console.log("Cookies recibidas:", req.cookies);
+    try {
+      const token = req.cookies.token;
+      if (!token) {
+        return res.status(401).send({ message: "No autorizado" }); // COMPRUBEBA EL TOKEN
+      }
+  
+      //decodifica el token
+      const decoded = jwt.verify(token, secret);
+      //busca el usuario en la base de datos
+      let collection = await db.collection("usuarios");
+      //lo busca con el id descodificado
+      //consulta
+      const id = decoded.id.toString();
+      const consulta = { _id: new ObjectId(id) };
+      let user = await collection.findOne(consulta);
+  
+      if (!user) {
+        return res.status(404).send({ message: "Usuario no encontrado" });
+      }
+      // si lo encuentra devuelve una respuesta ok y el json con los datos del usuario
+      res.status(200).send({ id: user._id, name: user.name, email: user.email });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: "Error obteniendo usuario" });
+    }
+  });
+  router.post("/cerrarsesion", (req, res) => {
+    // borra la cookie del token
+    res.clearCookie("token", { httpOnly: true, secure: false, sameSite: "Strict" });
+    // devuelve un mensaje de sesion cerrada
+    res.status(200).send({ message: "Sesión cerrada" });
+  });
+  
+
+
 // This section will help you delete a usuario
 router.delete("/:id", async (req, res) => {
   try {

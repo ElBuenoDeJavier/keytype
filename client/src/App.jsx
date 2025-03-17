@@ -63,7 +63,7 @@ class App extends Component {
     }
   }
 
-  //Con un set interval resta 1 al tiempo, comprueba si el tiempo es 0
+  //Con un set interval resta 1 al tiempo, comprueba si el tiempo es 0/ Para incluir las cookies en la petición
   // si es 0 borra el intervalo y establece, tiempo a 30 otra vez y contador a false
   comenzarContador(){
     const nuevoIntervalo = setInterval(() => {
@@ -111,20 +111,45 @@ class App extends Component {
     this.setState({palabras : generarPalabrasAleatorias(event.target.value)});
   }
 
-  // GUARDAR DATOS DEL USUARIO EN FORMATO JSON
-  setDataUsuario(data){
-    this.setState({dataUsuario : data});
-  }
+  // CONSULTA AL SERVIDOR PARA OBTENER LOS DATOS DEL USUARIO
+  setDataUsuario = async () => {
+    try {
+      const response = await fetch("http://localhost:5050/usuario/autenticado", {
+        method: "GET",
+        credentials: "include",
+      });
+  
+      if (response.ok) {
+        const data = await response.json(); // guarda en data el json de la respuesta
+        this.setState({ dataUsuario: data }); //guarda en el estado el json
+      } else {
+        this.setState({ dataUsuario: false });
+      }
+    } catch (error) {
+      console.error("Error obteniendo usuario:", error);
+      this.setState({ dataUsuario: false });
+    }
+  };
 
   //Cuando se llame a esta funcion navegara al componente con la ruta /
   iniciarSesion(){
     this.props.navigate('/');
   }
   // Eliminara los datos del state y redirigira a /
-  cerrarSesion(){
-    this.setState({dataUsuario: false});
-    this.props.navigate('/');
-  }
+  cerrarSesion = async () => {
+    try {
+      await fetch("http://localhost:5050/usuario/cerrarsesion", {
+        method: "POST",
+        credentials: "include",
+      });
+  
+      this.setState({ dataUsuario: false }); //elimina los datos del usuario del state
+      this.props.navigate("/");
+    } catch (error) {
+      console.error("Error cerrando sesión:", error);
+    }
+  };
+  
 
   // CONSULTA AL SERVIDOR PARA GUARDAR LAS ESTADÍSTICAS EN LA BASE DE DATOS
   guardarEstadisticas = async () => {
@@ -144,8 +169,7 @@ class App extends Component {
         method: 'POST',
         //Significa que devolverá un json
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-        credentials: 'include'
+        body: JSON.stringify(body)
       });
       const data = await response.json();
       //Si la respuesta no es true me devuelve la excepcion con el error
@@ -168,6 +192,12 @@ class App extends Component {
     }
   }
 
+  // CADA VEZ QUE SE CARGA EL COMPONENTE APP SE EJECUTA ESTA FUNCIÓN
+  //PARA OBTENER LOS DATOS DEL USUARIO
+  componentDidMount() {
+    this.setDataUsuario();
+  }
+  
   render(){
     return (
       <div>

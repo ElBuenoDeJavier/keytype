@@ -8,14 +8,16 @@ const PORT = process.env.PORT || 5050;
 const app = express(); //Inicializacion de express
 
 //middlewares
+
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true,
 })); // habilita cors para permitir peticiones desde fuera
 app.use(express.json()); // permite el procesamiento json en las solicitudes
+app.use(cookieParser()); //permite el uso de cookies
 app.use("/usuario", usuarios); // definicion de ruta
 app.use("/puntuacion", puntuacion);
-app.use(cookieParser()); //permite el uso de cookies
+
 // start the Express server
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
