@@ -6,10 +6,14 @@ import db from "../db/connection.js";
 // This help convert the id from string to ObjectId for the _id.
 import { ObjectId } from "mongodb";
 
+//importar jwt
+import jwt from "jsonwebtoken";
+
 // router is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /usuario.
 const router = express.Router();
+const secret = process.env.SECRET_JWT_KEY;
 
 // LISTA DE USUARIOS CON GET
 router.get("/", async (req, res) => {
@@ -22,8 +26,6 @@ router.get("/", async (req, res) => {
 // REGISTRAR USUARIO.
 router.post("/register", async (req, res) => {
   try {
-
-    
     let nuevoUsuario = {
       name: req.body.name,
       email: req.body.email,
@@ -67,8 +69,17 @@ router.post("/login", async (req, res) => {
           return res.status(401).send({message:"Contraseña incorrecta"});
         }
         //NO HA FALLADO NINGUNA COMPROBACION ENTONCES EXISTE Y ES CORRECTO
-        // SE LE DEVUELVE AL CLIENTE UN MENSAJE DE CORRECTO Y EL USUARIO
-        res.status(200).send({ message: "Inicio de sesión correcto", user });
+        //Crear un token jwt firmado con la secret key EN 1 HORA
+        const token = jwt.sign({ id: user._id}, 
+          secret, {expiresIn: "1h"});
+        // SE LE DEVUELVE AL CLIENTE UN MENSAJE DE CORRECTO Y EL USUARIO y un token
+        // se debe mandar también en la respuesta el token para que el cliente pueda usarlo en cookies
+        // se le manda cookie al cliente con el token
+        res
+        .status(200)
+        .cookie("token", token, { httpOnly: true, secure: false, sameSite: 'Strict' }) // 
+        // que la cookie del token solo se pueda acceder desde el servidor y no desde document.cookie
+        .send({ message: "Inicio de sesión correcto", user, token });
     
       } catch (err) {
         console.error(err);
@@ -76,6 +87,43 @@ router.post("/login", async (req, res) => {
         res.status(500).send({message: "Error al iniciar sesión"});
       }
   });
+  
+  router.get("/autenticado", async (req, res) => {
+    console.log("Cookies recibidas:", req.cookies);
+    try {
+      const token = req.cookies.token;
+      if (!token) {
+        return res.status(401).send({ message: "No autorizado" }); // COMPRUBEBA EL TOKEN
+      }
+  
+      //decodifica el token
+      const decoded = jwt.verify(token, secret);
+      //busca el usuario en la base de datos
+      let collection = await db.collection("usuarios");
+      //lo busca con el id descodificado
+      //consulta
+      const id = decoded.id.toString();
+      const consulta = { _id: new ObjectId(id) };
+      let user = await collection.findOne(consulta);
+  
+      if (!user) {
+        return res.status(404).send({ message: "Usuario no encontrado" });
+      }
+      // si lo encuentra devuelve una respuesta ok y el json con los datos del usuario
+      res.status(200).send({ id: user._id, name: user.name, email: user.email });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: "Error obteniendo usuario" });
+    }
+  });
+  router.post("/cerrarsesion", (req, res) => {
+    // borra la cookie del token
+    res.clearCookie("token", { httpOnly: true, secure: false, sameSite: "Strict" });
+    // devuelve un mensaje de sesion cerrada
+    res.status(200).send({ message: "Sesión cerrada" });
+  });
+  
+
 
 // This section will help you delete a usuario
 router.delete("/:id", async (req, res) => {

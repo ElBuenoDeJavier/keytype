@@ -1,4 +1,5 @@
 import React from "react";
+
 export default class Estadisticas extends React.Component {
     constructor(props) {
         super(props);
