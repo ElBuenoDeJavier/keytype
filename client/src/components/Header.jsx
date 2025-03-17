@@ -1,4 +1,5 @@
 import React from 'react';
+import ASCIIText from './ASCIIText';
 
 function Header({contador, pulsarBotonLogin, pulsarLogo, dataUsuario, pulsarEstadisticas, pulsarUsuario}) {
     if(contador == false){
@@ -8,6 +9,8 @@ function Header({contador, pulsarBotonLogin, pulsarLogo, dataUsuario, pulsarEsta
                 <div>
                     <h1 onClick={pulsarLogo} className='animate-pulse text-4xl text-gray-300 hover:text-white font-mono font-extrabold tooltip tooltip-bottom' data-tip="Jugar">
                         <i>KEYTYPE</i></h1>
+
+                      
                 </div>
                 <div className="flex items-center gap-3">
                     

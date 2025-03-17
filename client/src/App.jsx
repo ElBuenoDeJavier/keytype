@@ -20,6 +20,8 @@ import Form from './components/Form';
 import MostrarEstadisticas from './components/MostrarEstadisticas';
 import Estadisticas from './components/Estadisticas';
 import SalirJuego from './components/SalirJuego';
+//imports de reacbits
+import ClickSpark from './components/ClickSpark';
 
 class App extends Component {
   constructor(props){
@@ -201,6 +203,13 @@ class App extends Component {
   render(){
     return (
       <div>
+        <ClickSpark
+        sparkColor='#fff'
+        sparkSize={10}
+        sparkRadius={15}
+        sparkCount={8}
+        duration={400}
+      >
         <Header 
           //Para controlar que no está iniciado el contador y poder mostrar el header
           contador={this.state.contador} 
@@ -278,6 +287,7 @@ class App extends Component {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
+      </ClickSpark>
       </div>
     )
   }
