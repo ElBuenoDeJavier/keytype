@@ -8,7 +8,10 @@ const PORT = process.env.PORT || 5050;
 const app = express(); //Inicializacion de express
 
 //middlewares
-app.use(cors()); // habilita cors para permitir peticiones desde fuera
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+})); // habilita cors para permitir peticiones desde fuera
 app.use(express.json()); // permite el procesamiento json en las solicitudes
 app.use("/usuario", usuarios); // definicion de ruta
 app.use("/puntuacion", puntuacion);

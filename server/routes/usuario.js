@@ -70,14 +70,14 @@ router.post("/login", async (req, res) => {
         }
         //NO HA FALLADO NINGUNA COMPROBACION ENTONCES EXISTE Y ES CORRECTO
         //Crear un token jwt firmado con la secret key EN 1 HORA
-        const token = jwt.sign({ name: user.name, email: user.email, password: user.password}, 
+        const token = jwt.sign({ id: user._id }, 
           secret, {expiresIn: "1h"});
         // SE LE DEVUELVE AL CLIENTE UN MENSAJE DE CORRECTO Y EL USUARIO y un token
         // se debe mandar también en la respuesta el token para que el cliente pueda usarlo en cookies
         // se le manda cookie al cliente con el token
         res
         .status(200)
-        .cookie("token", token, { httpOnly: true }) // 
+        .cookie("token", token, { httpOnly: true, secure: false, sameSite: 'Strict' }) // 
         // que la cookie del token solo se pueda acceder desde el servidor y no desde document.cookie
         .send({ message: "Inicio de sesión correcto", user, token });
     
@@ -88,6 +88,8 @@ router.post("/login", async (req, res) => {
       }
   });
 
+
+  
 // This section will help you delete a usuario
 router.delete("/:id", async (req, res) => {
   try {

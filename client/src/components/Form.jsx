@@ -69,7 +69,8 @@ export default class Form extends Component {
       const response = await fetch(endpointLogin, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        credentials: 'include'
       });
       //OBTIENE LOS DATOS DE RESPUESTA
       const data = await response.json();
