@@ -144,7 +144,8 @@ class App extends Component {
         method: 'POST',
         //Significa que devolverá un json
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        credentials: 'include'
       });
       const data = await response.json();
       //Si la respuesta no es true me devuelve la excepcion con el error
