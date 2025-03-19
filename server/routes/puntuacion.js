@@ -40,4 +40,18 @@ router.get("/", async (req, res) => {
   res.send(results);
 });
 
+//GET POR NOMBRE
+router.get("/name=:name", async (req, res) => {
+  let collection = await db.collection("puntuaciones");
+  //devuelve un array de objetos
+  let results
+  try{
+    results = await collection.find({name: req.params.name}).toArray();
+    res.send(results);
+  }catch(err){
+    res.status(404).send({message: "Usuario no encontrado"});
+  }
+}
+);
+
 export default router;
