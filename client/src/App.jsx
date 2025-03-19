@@ -193,6 +193,9 @@ class App extends Component {
       alert('Error:'+ error);
     }
   }
+  borrarEstadisticas(){
+    this.setState({aciertos:0,errores:0,escritos:0});
+  }
 
   // CADA VEZ QUE SE CARGA EL COMPONENTE APP SE EJECUTA ESTA FUNCIÓN
   //PARA OBTENER LOS DATOS DEL USUARIO
@@ -259,6 +262,7 @@ class App extends Component {
                   escritos={this.state.escritos} 
                   contador={this.state.contador}
                   guardarEstadisticas={this.guardarEstadisticas.bind(this)}
+                  borrarEstadisticas={this.borrarEstadisticas.bind(this)}
                 /> 
               </MostrarJuego>
             } />

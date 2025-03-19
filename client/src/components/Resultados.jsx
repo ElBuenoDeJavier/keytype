@@ -1,4 +1,5 @@
 import React from "react";
+
 //Muestra los resultados de los aciertos, errores y caracteres escritos
 function Resultados(props){
   //Lo muestra si el contador no esta iniciado y si se han escrito caracteres
@@ -33,12 +34,16 @@ function Resultados(props){
             <div className="stat-value">{props.escritos}</div>
         </div>
       </div>
-      <button onClick={()=>props.guardarEstadisticas()} className="animate-bounce text-white text-2xl mt-5 px-5 py-2 rounded-full btn hover:bg-gray-800">
+      <button onClick={()=>props.guardarEstadisticas()} className="mr-0.5 animate-bounce text-white text-2xl mt-5 px-5 py-2 rounded-full btn hover:bg-gray-800">
         Guardar estadísticas
         <svg class="h-8 w-8 text-indigo-600"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  
         strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <path 
         d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />  <polyline points="17 21 17 13 7 13 7 21" />  <polyline points="7 3 7 8 15 8" /></svg>
       </button>
+      <div className="flex justify-center mt-4">
+      <svg onClick={()=>props.borrarEstadisticas()} class="h-8 w-8 text-red-400 hover:text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  
+          strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <polyline points="3 6 5 6 21 6" />  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
+      </div>
       </div>
     )
     }
