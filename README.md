@@ -38,3 +38,14 @@ Además, permite a los usuarios registrarse, iniciar sesión y guardar su progre
 ```bash
 git clone https://github.com/tuusuario/keytype.git
 cd keytype
+```
+### Arrancar fronted
+```bash
+cd client
+npm run dev
+```
+### Arrancar servidor
+```bash
+cd server
+node --env-file=config.env server
+```
