@@ -45,7 +45,7 @@ class App extends Component {
   //también limpia el intervalo
   reiniciar(){
     let words = generarPalabrasAleatorias(40);
-    this.setState({palabras: words, entradaUsuario: '', tiempo: 30});
+    this.setState({palabras: words, entradaUsuario: '', tiempo: 30, tiempo2: 30});
     clearInterval(this.state.intervalo);
   }
 
