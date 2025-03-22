@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import EstadisticasUsuario from './EstadisticasUsuario';
 
-export default function ConfigUsuario({ dataUsuario, cerrarSesion, volverInicio }) {
+export default function ConfigUsuario({ dataUsuario, cerrarSesion, volverInicio, tiempo2 }) {
     
     return (
         <div className="w-10/12 h-8/12">
@@ -16,7 +16,7 @@ export default function ConfigUsuario({ dataUsuario, cerrarSesion, volverInicio 
                 </h1>
                 <button onClick={cerrarSesion} className='btn btn-error'>Cerrar sesión</button>
             </div>
-            <EstadisticasUsuario name={dataUsuario.name}/>
+            <EstadisticasUsuario name={dataUsuario.name} tiempo2={tiempo2}/>
             <div className='flex justify-center'>
             <button onClick={volverInicio} className='underline mt-10 hover:text-indigo-600'>Volver</button>
             </div>

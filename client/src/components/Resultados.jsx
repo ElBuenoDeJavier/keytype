@@ -19,6 +19,11 @@ function Resultados(props){
             }</div>
         </div>
         
+        <div className="stat place-items-center hover:bg-yellow-800">
+            <div className="stat-title">Caracteres por segundo</div>
+            <div className="stat-value">{(props.aciertos/props.tiempo2).toFixed(2)}</div>
+        </div>
+
         <div className="stat place-items-center hover:bg-green-800">
             <div className="stat-title">Aciertos</div>
             <div className="stat-value">{props.aciertos}</div>

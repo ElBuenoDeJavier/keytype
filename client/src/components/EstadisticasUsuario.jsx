@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function EstadisticasUsuario({ name }) {
+export default function EstadisticasUsuario({ name, tiempo2 }) {
     const [arrayUsuarios, setArrayUsuarios] = useState([]);
 
     //Para obtener todos los usuarios en un array
@@ -71,6 +71,11 @@ export default function EstadisticasUsuario({ name }) {
                                             Math.round(100 * (usuario.aciertos / usuario.escritos)) > 70 ? "⭐⭐⭐" :
                                                 "⭐⭐"
                                 }</div>
+                            </div>
+
+                            <div className="stat place-items-center hover:bg-yellow-800">
+                                <div className="stat-title">Caracteres por segundo</div>
+                                <div className="stat-value">{(usuario.aciertos/tiempo2).toFixed(2)}</div>
                             </div>
 
                             <div className="stat place-items-center hover:bg-green-800">

@@ -29,7 +29,8 @@ class App extends Component {
     this.state = {
       palabras: generarPalabrasAleatorias(40),//genera 40 palabras
       entradaUsuario: '',//tiene la entrada del usuario
-      tiempo: 30,// guarda el tiempo del contador
+      tiempo: 30,// guarda el tiempo del contador variable
+      tiempo2: 30, // guarda el tiempo del contador en un valor fijo
       intervalo: null,//guarda el objeto del intervalo
       contador: false,//variable booleana para comprobar que está activo el contador
       //resultados
@@ -103,7 +104,7 @@ class App extends Component {
   //El valor que se le pasa como parámetro se guardará en el state de tiempo
   establecerTiempo(event){
     return(
-      this.setState({tiempo : event.target.value})
+      this.setState({tiempo : event.target.value, tiempo2: event.target.value})
     )
   }
 
@@ -205,14 +206,14 @@ class App extends Component {
   
   render(){
     return (
-      <div>
+      <div className='h-screen w-screen'>
         <ClickSpark
         sparkColor='#fff'
         sparkSize={10}
         sparkRadius={15}
         sparkCount={8}
         duration={400}
-      >
+        >
         <Header 
           //Para controlar que no está iniciado el contador y poder mostrar el header
           contador={this.state.contador} 
@@ -261,6 +262,7 @@ class App extends Component {
                   errores={this.state.errores} 
                   escritos={this.state.escritos} 
                   contador={this.state.contador}
+                  tiempo2={this.state.tiempo2}
                   guardarEstadisticas={this.guardarEstadisticas.bind(this)}
                   borrarEstadisticas={this.borrarEstadisticas.bind(this)}
                 /> 
@@ -277,7 +279,10 @@ class App extends Component {
             } />
             <Route path="/estadisticas" element={
               <MostrarEstadisticas>
-                <Estadisticas volverInicio={() => this.props.navigate('/')}/>
+                <Estadisticas 
+                volverInicio={() => this.props.navigate('/')}
+                tiempo2={this.state.tiempo2}
+                />
               </MostrarEstadisticas>
             } />
             <Route path="/configuracion" element={
@@ -285,6 +290,7 @@ class App extends Component {
                 dataUsuario={this.state.dataUsuario}
                 cerrarSesion={this.cerrarSesion.bind(this)}
                 volverInicio={() => this.props.navigate('/')}
+                tiempo2={this.state.tiempo2}
               />
             } />
             {/* Si no se define una URL mandara a /*/}

@@ -29,12 +29,12 @@ export default class Estadisticas extends React.Component {
                 return 0;
             }
             );
-            //Para ordenar los usuarios por puntaje
+            //Para ordenar los usuarios por caracteres escritos
             arrayUsuarios.sort((a, b) => {
-                if ((Math.round(100*(a.aciertos/a.escritos))) > (Math.round(100*(b.aciertos/b.escritos)))) {
+                if ((a.aciertos/this.props.tiempo2).toFixed(2) > (b.aciertos/this.props.tiempo2).toFixed(2)) {
                     return -1;
                 }
-                if ((Math.round(100*(a.aciertos/a.escritos))) < (Math.round(100*(b.aciertos/b.escritos)))) {
+                if ((a.aciertos/this.props.tiempo2).toFixed(2) < (b.aciertos/this.props.tiempo2).toFixed(2)) {
                     return 1;
                 }
                 return 0;
@@ -64,7 +64,7 @@ export default class Estadisticas extends React.Component {
 
                                 <div className="stat place-items-center hover:bg-indigo-800">
                                     <div className="stat-title">Usuario</div>
-                                    <div className="stat-value font-extrabold bg-gradient-to-bl from-white to-indigo-700 bg-clip-text text-transparent leading-normal">{usuario.name}</div>
+                                    <div className="stat-value font-extrabold bg-gradient-to-bl from-purple-700 to-blue-700 bg-clip-text text-transparent leading-normal">{usuario.name}</div>
                                 </div>
                             
                                 <div className="stat place-items-center hover:bg-gray-900">
@@ -78,6 +78,11 @@ export default class Estadisticas extends React.Component {
                                     }</div>
                                 </div>
                                 
+                                <div className="stat place-items-center hover:bg-yellow-800">
+                                    <div className="stat-title">Caracteres por segundo</div>
+                                    <div className="stat-value">{(usuario.aciertos/this.props.tiempo2).toFixed(2)}</div>
+                                </div>
+
                                 <div className="stat place-items-center hover:bg-green-800">
                                     <div className="stat-title">Aciertos</div>
                                     <div className="stat-value">{usuario.aciertos}</div>
