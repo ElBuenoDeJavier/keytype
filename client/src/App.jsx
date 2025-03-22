@@ -236,7 +236,11 @@ class App extends Component {
                   contador={this.state.contador}
                   establecerTiempo={this.establecerTiempo.bind(this)} 
                   establecerPalabras={this.establecerPalabras}/>
-                <Contador tiempoRestante={this.state.tiempo}/>
+                <Contador 
+                tiempoRestante={this.state.tiempo}
+                tiempo2={this.state.tiempo2}
+                contador={this.state.contador}
+                />
                 <ReinicioBoton 
                   reiniciar={this.reiniciar.bind(this)} 
                   contador={this.state.contador}/>
