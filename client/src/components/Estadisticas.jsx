@@ -29,7 +29,7 @@ export default class Estadisticas extends React.Component {
                 return 0;
             }
             );
-            //Para ordenar los usuarios por caracteres escritos
+            //Para ordenar los usuarios por número de caracteres por segundo
             arrayUsuarios.sort((a, b) => {
                 if ((a.aciertos/this.props.tiempo2).toFixed(2) > (b.aciertos/this.props.tiempo2).toFixed(2)) {
                     return -1;
