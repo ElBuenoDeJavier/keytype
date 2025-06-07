@@ -6,9 +6,11 @@ import usarNavegacion from './usarNavegacion';
 
 import Header from './components/Header';
 //importo la función que genera mis palabras aleatorias
+// Estos componentes han sido reemplazados por TypingArea que es un componente unificado y mejorado
 import GenerarPalabras from './components/GenerarPalabras';
-import Contador from './components/Contador';
 import InputUsuario from './components/InputUsuario';
+
+import Contador from './components/Contador';
 import ReinicioBoton from './components/ReinicioBoton';
 import Resultados from './components/Resultados';
 import { generarPalabrasAleatorias } from './palabrasAleatorias/generador';
@@ -20,6 +22,8 @@ import Form from './components/Form';
 import MostrarEstadisticas from './components/MostrarEstadisticas';
 import Estadisticas from './components/Estadisticas';
 import SalirJuego from './components/SalirJuego';
+
+import TypingArea from './components/TypingArea';
 //imports de reacbits
 import ClickSpark from './components/ClickSpark';
 
@@ -246,15 +250,11 @@ class App extends Component {
                   contador={this.state.contador}/>
                 
                 <div className='relative mt-3 leading-relaxed inset-0 text-3xl break-all'>
-                  <GenerarPalabras 
-                    words={this.state.palabras} 
-                    className='absolute inset-0'/>
-                  
-                  <InputUsuario 
-                    className='absolute inset-0 ' 
-                    entradaUsuario={this.state.entradaUsuario} 
-                    handleInputChange={this.handleInputChange} 
-                    palabras={this.state.palabras}/>
+                  <TypingArea
+                    palabras={this.state.palabras}
+                    entradaUsuario={this.state.entradaUsuario}
+                    handleInputChange={this.handleInputChange}
+                  />
                 </div>
                 
                 <SalirJuego 
